@@ -266,8 +266,8 @@ def train():
     device = torch.device(DEVICE)
     
     # Load dataset
-    print("📂 Loading dataset...")
-    full_dataset = ImageDataset(folder_path=PATH)
+    print("Loading dataset...")
+    full_dataset = ImageDataset(path=PATH)
     
     # Split dataset
     val_size = int(VALIDATION_SPLIT * len(full_dataset))
@@ -298,14 +298,14 @@ def train():
         pin_memory=True
     )
     
-    print(f"✅ Training samples: {len(train_dataset)}")
-    print(f"✅ Validation samples: {len(val_dataset)}")
+    print(f"[OK] Training samples: {len(train_dataset)}")
+    print(f"[OK] Validation samples: {len(val_dataset)}")
     
     # Model
     print("\n🏗️  Building model...")
     model = Unet(IN_CHANNELS, OUT_CHANNELS).to(device)
     num_params = sum(p.numel() for p in model.parameters())
-    print(f"✅ Model parameters: {num_params:,}")
+    print(f"[OK] Model parameters: {num_params:,}")
     
     # Loss function
     if LOSS_TYPE == "crossentropy":
@@ -409,7 +409,7 @@ def train():
                 'val_loss': val_loss,
                 'val_dice': val_metrics['dice']
             }, checkpoint_path)
-            print(f"💾 Checkpoint saved: {checkpoint_path}")
+            print(f"[SAVE] Checkpoint saved: {checkpoint_path}")
         
         # Save best model
         if val_metrics['dice'] > best_val_dice:
@@ -419,25 +419,25 @@ def train():
             if KEEP_BEST_MODEL:
                 best_model_path = os.path.join(MODEL_DIR, 'best_model.pth')
                 torch.save(model.state_dict(), best_model_path)
-                print(f"⭐ New best model! Dice: {best_val_dice:.4f} → Saved to {best_model_path}")
+                print(f"[BEST] New best model! Dice: {best_val_dice:.4f} → Saved to {best_model_path}")
         else:
             epochs_no_improve += 1
         
         # Early stopping
         if EARLY_STOPPING and epochs_no_improve >= EARLY_STOPPING_PATIENCE:
-            print(f"\n⚠️  Early stopping triggered! No improvement for {EARLY_STOPPING_PATIENCE} epochs.")
+            print(f"\n[WARNING]  Early stopping triggered! No improvement for {EARLY_STOPPING_PATIENCE} epochs.")
             break
     
     # Save final model
     if KEEP_LAST_MODEL:
         last_model_path = os.path.join(MODEL_DIR, 'last_model.pth')
         torch.save(model.state_dict(), last_model_path)
-        print(f"\n💾 Final model saved: {last_model_path}")
+        print(f"\n[SAVE] Final model saved: {last_model_path}")
     
     # Training complete
     total_time = time.time() - start_time
     print(f"\n{'='*70}")
-    print("✅ TRAINING COMPLETE!")
+    print("[OK] TRAINING COMPLETE!")
     print(f"{'='*70}")
     print(f"Total time: {total_time/60:.1f} minutes")
     print(f"Best validation Dice: {best_val_dice:.4f}")
@@ -448,3 +448,4 @@ def train():
 
 if __name__ == "__main__":
     train()
+

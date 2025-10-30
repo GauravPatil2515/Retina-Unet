@@ -173,6 +173,8 @@ datasets/
 
 # Model checkpoints (keep only best/last)
 checkpoints/
+checkpoints_unetpp/*.pth
+!checkpoints_unetpp/metrics.json
 models/*.pth
 !models/best_model.pth
 !models/last_model.pth
@@ -182,6 +184,7 @@ runs/
 predictions/
 results/
 results_visualization/
+evaluation_results_unetpp/*.png
 *.png
 *.jpg
 *.jpeg
