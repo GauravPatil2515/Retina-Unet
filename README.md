@@ -39,10 +39,12 @@ Open **[GITHUB_KAGGLE_WORKFLOW.txt](GITHUB_KAGGLE_WORKFLOW.txt)** - copy the 8 c
 
 ## 📁 Key Files
 
-- **[GITHUB_KAGGLE_WORKFLOW.txt](GITHUB_KAGGLE_WORKFLOW.txt)** ⭐ - Complete Kaggle guide (8 cells)
+- **[GITHUB_KAGGLE_WORKFLOW.txt](GITHUB_KAGGLE_WORKFLOW.txt)** ⭐ - Complete Kaggle guide (8 ready-to-copy cells)
 - **[train_optimized.py](train_optimized.py)** - Optimized training script
 - **[config_optimized.py](config_optimized.py)** - Best hyperparameters
-- **[QUICK_ANSWER.txt](QUICK_ANSWER.txt)** - All your questions answered
+- **[unet.py](unet.py)** - U-Net model architecture
+- **[dataloader.py](dataloader.py)** - Dataset loading
+- **[inference.py](inference.py)** - Make predictions on new images
 
 ## 🎯 Features
 
@@ -53,14 +55,42 @@ Open **[GITHUB_KAGGLE_WORKFLOW.txt](GITHUB_KAGGLE_WORKFLOW.txt)** - copy the 8 c
 ✅ **Mixed Precision** - Faster training  
 ✅ **Complete Docs** - Step-by-step guides
 
-## 📖 Documentation
+## 📖 Project Structure
 
-| File | Purpose |
-|------|---------|
-| **GITHUB_KAGGLE_WORKFLOW.txt** | 🔥 Main Kaggle guide |
-| QUICK_ANSWER.txt | Quick reference |
-| IMPROVEMENT_PLAN.txt | How to get 80-85% |
-| RESULTS_SUMMARY.md | Performance analysis |
+```
+Retina-Unet/
+├── 🎯 Core Files
+│   ├── unet.py                        # U-Net model architecture
+│   ├── dataloader.py                  # Dataset loading
+│   ├── utils.py                       # Helper functions
+│   └── inference.py                   # Make predictions
+│
+├── 🚀 Training
+│   ├── train_improved.py              # Basic training
+│   ├── train_optimized.py             # Advanced training (recommended)
+│   ├── config.py                      # Basic config
+│   └── config_optimized.py            # Optimized config
+│
+├── 📊 Evaluation
+│   ├── evaluate_results.py            # Calculate metrics
+│   └── visualize.py                   # Visualization tools
+│
+├── 📚 Kaggle
+│   ├── KAGGLE_NOTEBOOK_SIMPLE.py      # All cells in one file
+│   └── GITHUB_KAGGLE_WORKFLOW.txt     # Step-by-step guide ⭐
+│
+├── 📦 Other
+│   ├── README.md                      # This file
+│   ├── requirements.txt               # Dependencies
+│   └── download_datasets.py           # Get more datasets
+│
+└── 📂 Data (you create these)
+    └── Retina/
+        ├── train/image/               # Training images
+        ├── train/mask/                # Training masks
+        ├── test/image/                # Test images
+        └── test/mask/                 # Test masks
+```
 
 ## 🛠️ Local Training (Optional)
 

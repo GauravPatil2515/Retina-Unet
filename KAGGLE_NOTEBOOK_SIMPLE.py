@@ -7,8 +7,8 @@
 # ===========================================================================
 
 # Clone your GitHub repository
-!git clone https://github.com/Harshtherocking/retina-unet-segmentation.git
-%cd retina-unet-segmentation
+!git clone https://github.com/GauravPatil2515/Retina-Unet.git
+%cd Retina-Unet
 
 # Install required packages
 !pip install -q albumentations segmentation-models-pytorch
@@ -100,7 +100,7 @@ print("\n✅ Dataset prepared successfully!")
 
 # Update paths in config
 import sys
-sys.path.insert(0, '/kaggle/working/retina-unet-segmentation')
+sys.path.insert(0, '/kaggle/working/Retina-Unet')
 
 # Create Kaggle-specific config
 with open('config_kaggle.py', 'w') as f:
@@ -114,10 +114,10 @@ import torch
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 
 # Paths - Updated for Kaggle
-TRAIN_IMG_DIR = "/kaggle/working/retina-unet-segmentation/data/train/image"
-TRAIN_MASK_DIR = "/kaggle/working/retina-unet-segmentation/data/train/mask"
-TEST_IMG_DIR = "/kaggle/working/retina-unet-segmentation/data/test/image"
-TEST_MASK_DIR = "/kaggle/working/retina-unet-segmentation/data/test/mask"
+TRAIN_IMG_DIR = "/kaggle/working/Retina-Unet/data/train/image"
+TRAIN_MASK_DIR = "/kaggle/working/Retina-Unet/data/train/mask"
+TEST_IMG_DIR = "/kaggle/working/Retina-Unet/data/test/image"
+TEST_MASK_DIR = "/kaggle/working/Retina-Unet/data/test/mask"
 
 # Image settings
 IMAGE_SIZE = 512
