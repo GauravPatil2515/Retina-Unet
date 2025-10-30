@@ -163,32 +163,22 @@ cython_debug/
 .vscode/
 
 # Project-specific
-# Data folders
-Retina/
+# Data folders (keep Retina dataset for now)
 data/
 dataset/
 datasets/
 *.zip
 *.tar.gz
 
-# Model checkpoints (keep only best/last)
-checkpoints/
-checkpoints_unetpp/*.pth
-!checkpoints_unetpp/metrics.json
-models/*.pth
-!models/best_model.pth
-!models/last_model.pth
+# Model checkpoints (too large for GitHub)
+results/checkpoints_unetpp/*.pth
+!results/checkpoints_unetpp/metrics.json
 
-# Training outputs
-runs/
-predictions/
-results/
-results_visualization/
-evaluation_results_unetpp/*.png
+# Visualizations (optional - can be regenerated)
+results/evaluation_results_unetpp/*.png
+results/*.png
 *.png
-*.jpg
-*.jpeg
-!sample_results.png
+!docs/*.png
 
 # Logs
 train-log.txt
@@ -197,3 +187,6 @@ train-log.txt
 # OS
 .DS_Store
 Thumbs.db
+
+# Legacy/backup files
+legacy/
