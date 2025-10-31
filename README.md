@@ -21,6 +21,20 @@ State-of-the-art retinal blood vessel segmentation using U-Net++ (Nested U-Net) 
 - Training Time: 30 minutes
 - Model Size: 9.0M parameters
 
+## Visual Results
+
+### RetinaAI Dashboard
+
+![Dashboard Interface](https://raw.githubusercontent.com/GauravPatil2515/Retina-Unet/main/docs/dashboard_preview.png)
+
+Professional web interface with real-time segmentation and visualization
+
+### Segmentation Results
+
+![Full Results](https://raw.githubusercontent.com/GauravPatil2515/Retina-Unet/main/docs/segmentation_results.png)
+
+Complete analysis showing: Original Image | Probability Map | Binary Segmentation | Overlay Visualization
+
 ## Project Structure
 
 ``text
