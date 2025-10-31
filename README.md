@@ -1,4 +1,4 @@
-# 🩺 Retina Blood Vessel Segmentation with U-Net++# 🩺 Retina Blood Vessel Segmentation with U-Net++# 🩺 Retina Blood Vessel Segmentation
+# 🩺 Retina Blood Vessel Segmentation with U-Net++# 🩺 Retina Blood Vessel Segmentation with U-Net++# 🩺 Retina Blood Vessel Segmentation with U-Net++# 🩺 Retina Blood Vessel Segmentation
 
 
 
@@ -6,7 +6,7 @@
 
 [![PyTorch](https://img.shields.io/badge/PyTorch-2.0+-red.svg)](https://pytorch.org/)
 
-[![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)[![Python](https://img.shields.io/badge/Python-3.8+-blue.svg)](https://www.python.org/)Deep learning model for automated retinal blood vessel segmentation using U-Net architecture with PyTorch.
+[![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)[![Python](https://img.shields.io/badge/Python-3.8+-blue.svg)](https://www.python.org/)
 
 
 
@@ -14,51 +14,115 @@
 
 
 
-## 🎯 Performance[![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)[![Made with PyTorch](https://img.shields.io/badge/PyTorch-2.0+-EE4C2C?logo=pytorch)](https://pytorch.org)
+## 🎯 Performance[![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)[![Python](https://img.shields.io/badge/Python-3.8+-blue.svg)](https://www.python.org/)Deep learning model for automated retinal blood vessel segmentation using U-Net architecture with PyTorch.
 
 
 
-| Metric | Score | Status |[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+| Metric | Score | Status |
 
 |--------|-------|--------|
 
-| **Dice Coefficient** | **83.82%** | ✅ |**State-of-the-art retinal blood vessel segmentation using U-Net++ (Nested U-Net) architecture.**
+| **Dice Coefficient** | **83.82%** | ✅ |**State-of-the-art retinal blood vessel segmentation using U-Net++ (Nested U-Net) architecture with PyTorch.**[![PyTorch](https://img.shields.io/badge/PyTorch-2.0+-red.svg)](https://pytorch.org/)
 
 | **Accuracy** | **96.08%** | ✅ |
 
-| **Sensitivity** | **82.91%** | ✅ |## � Performance
+| **Sensitivity** | **82.91%** | ✅ |
 
 | **Specificity** | **97.97%** | ✅ |
 
-| **AUC-ROC** | **97.82%** | ✅ |🎯 **Performance:** 83.82% Dice Score | 96.08% Accuracy | 97.97% Specificity
+| **AUC-ROC** | **97.82%** | ✅ |## 🎯 Performance[![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)[![Made with PyTorch](https://img.shields.io/badge/PyTorch-2.0+-EE4C2C?logo=pytorch)](https://pytorch.org)
 
 
 
-**Test Set:** DRIVE dataset (20 images)  | Metric | Score |
+- **Test Set:** DRIVE dataset (20 images)
 
-**GPU:** NVIDIA RTX 3050 6GB  
+- **GPU:** NVIDIA RTX 3050 6GB
 
-**Training Time:** ~30 minutes---|--------|-------|
+- **Training Time:** ~30 minutes| Metric | Score | Status |[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
+- **Model Size:** 9.0M parameters
+
+|--------|-------|--------|
+
+## 📁 Project Structure
+
+| **Dice Coefficient** | **83.82%** | ✅ |**State-of-the-art retinal blood vessel segmentation using U-Net++ (Nested U-Net) architecture.**
+
+```text
+
+retina-unet-segmentation/| **Accuracy** | **96.08%** | ✅ |
+
+├── models/                      # Model architectures
+
+│   ├── unet_plus_plus.py       # U-Net++ implementation (9.0M params)| **Sensitivity** | **82.91%** | ✅ |## � Performance
+
+│   └── losses_unetpp.py        # Loss functions & metrics
+
+├── scripts/                     # Training & inference scripts| **Specificity** | **97.97%** | ✅ |
+
+│   ├── train_unetpp.py         # Training script
+
+│   ├── evaluate_unetpp.py      # Evaluation on test set| **AUC-ROC** | **97.82%** | ✅ |🎯 **Performance:** 83.82% Dice Score | 96.08% Accuracy | 97.97% Specificity
+
+│   ├── test_model.py           # Quick model test
+
+│   ├── dataloader_unetpp.py    # Data loading & augmentation
+
+│   └── inference.py            # Single image inference
+
+├── dashboard/                   # Web interface (FastAPI)**Test Set:** DRIVE dataset (20 images)  | Metric | Score |
+
+│   ├── app.py                  # Backend API
+
+│   ├── templates/              # HTML templates**GPU:** NVIDIA RTX 3050 6GB  
+
+│   │   └── index_platform.html # Multi-page platform UI
+
+│   └── static/                 # CSS & JavaScript**Training Time:** ~30 minutes---|--------|-------|
+
+│       ├── style_platform.css  # Professional styling
+
+│       └── script_platform.js  # Upload & visualization logic
+
+├── results/                     # Model outputs & checkpoints
+
+│   ├── checkpoints_unetpp/     # Saved models---| **Dice Coefficient** | **68-82%** |
+
+│   │   ├── best.pth           # Best model (Dice 0.8382)
+
+│   │   └── latest.pth         # Latest checkpoint
+
+│   └── evaluation_results_unetpp/
+
+│       └── test_metrics.json   # Test set metrics## 🚀 Quick Start## 📁 Project Structure| IoU | 60-68% |
+
+├── Retina/                      # DRIVE dataset
+
+│   ├── train/                  # Training images & masks
+
+│   └── test/                   # Test images & masks
+
+└── docs/                        # Documentation### 1️⃣ Installation| Accuracy | 95-96% |
+
+    └── FINAL_RESULTS.md        # Detailed results & analysis
+
+```
 
 
 
----| **Dice Coefficient** | **68-82%** |
+## 🚀 Quick Start```bash```
 
 
 
-## 🚀 Quick Start## 📁 Project Structure| IoU | 60-68% |
+### 1️⃣ Installation# Clone repository
 
 
 
-### 1️⃣ Installation| Accuracy | 95-96% |
-
-
-
-```bash```
+```bashgit clone https://github.com/GauravPatil2515/Retina-Unet.gitretina-unet-segmentation/## 📁 Quick Start
 
 # Clone repository
 
-git clone https://github.com/GauravPatil2515/Retina-Unet.gitretina-unet-segmentation/## 📁 Quick Start
+git clone https://github.com/GauravPatil2515/Retina-Unet.gitcd Retina-Unet
 
 cd Retina-Unet
 
@@ -66,301 +130,600 @@ cd Retina-Unet
 
 # Install dependencies
 
-pip install -r requirements_unetpp.txt│   ├── unet_plus_plus.py       # U-Net++ implementation (9.0M params)```bash
+pip install -r requirements_unetpp.txt# Install dependencies
 
 ```
 
-│   └── losses_unetpp.py        # Loss functions & metrics# Install dependencies
+pip install -r requirements_unetpp.txt│   ├── unet_plus_plus.py       # U-Net++ implementation (9.0M params)```bash
 
 **Requirements:**
 
+```
+
+- Python 3.8+
+
+- PyTorch 2.0+ with CUDA│   └── losses_unetpp.py        # Loss functions & metrics# Install dependencies
+
+- 6GB+ GPU memory (RTX 3050 or better)
+
+**Requirements:**
+
+### 2️⃣ Quick Test
+
 - Python 3.8+│pip install -r requirements.txt
+
+Test the pre-trained model:
 
 - PyTorch 2.0+ with CUDA
 
-- 6GB+ GPU memory (RTX 3050 or better)├── scripts/                     # Training & inference scripts
+```bash
 
-
-
-### 2️⃣ Quick Test│   ├── train_unetpp.py         # Training script# Train the model
-
-
-
-Test the pre-trained model:│   ├── evaluate_unetpp.py      # Evaluation on test setpython train_optimized.py
-
-
-
-```bash│   ├── test_model.py           # Quick model test
-
-python scripts/test_model.py
-
-```│   ├── dataloader_unetpp.py    # Data loading & augmentation# Or use basic training
-
-
-
-Output: `results/test_result.png` with 4-panel visualization│   └── inference.py            # Single image inferencepython train_improved.py
-
-
-
-### 3️⃣ Web Dashboard│```
-
-
-
-Launch the interactive dashboard:├── results/                     # Training outputs
-
-
-
-```bash│   ├── checkpoints_unetpp/     # Model checkpoints## 📁 Key Files
-
-cd dashboard
-
-uvicorn app:app --host 127.0.0.1 --port 8000│   │   ├── best.pth            # Best model (83.67% val Dice)
+python scripts/test_model.py- 6GB+ GPU memory (RTX 3050 or better)├── scripts/                     # Training & inference scripts
 
 ```
 
-│   │   ├── latest.pth          # Latest checkpoint- **[train_optimized.py](train_optimized.py)** ⭐ - Advanced training (recommended)
 
-Then open: **http://localhost:8000**
+
+Output: `results/test_result.png` with 4-panel visualization
+
+### 2️⃣ Quick Test│   ├── train_unetpp.py         # Training script# Train the model
+
+### 3️⃣ Download Dataset
+
+
+
+```bash
+
+python download_datasets.pyTest the pre-trained model:│   ├── evaluate_unetpp.py      # Evaluation on test setpython train_optimized.py
+
+```
+
+
+
+This downloads and extracts the DRIVE dataset automatically to the `Retina/` folder.
+
+```bash│   ├── test_model.py           # Quick model test
+
+### 4️⃣ Train Model
+
+python scripts/test_model.py
+
+```bash
+
+python scripts/train_unetpp.py```│   ├── dataloader_unetpp.py    # Data loading & augmentation# Or use basic training
+
+```
+
+
+
+**Training Configuration:**
+
+Output: `results/test_result.png` with 4-panel visualization│   └── inference.py            # Single image inferencepython train_improved.py
+
+- **Epochs:** 10
+
+- **Batch Size:** 8
+
+- **Learning Rate:** 0.001 (Adam optimizer)
+
+- **Image Size:** 512×512### 3️⃣ Web Dashboard│```
+
+- **Loss Function:** BCEDiceLoss (BCE + Dice)
+
+- **Data Augmentation:** Random flips, rotations, elastic transforms
+
+
+
+Checkpoints saved to `results/checkpoints_unetpp/`Launch the interactive dashboard:├── results/                     # Training outputs
+
+
+
+### 5️⃣ Evaluate Model
+
+
+
+```bash```bash│   ├── checkpoints_unetpp/     # Model checkpoints## 📁 Key Files
+
+python scripts/evaluate_unetpp.py
+
+```cd dashboard
+
+
+
+Generates metrics on test set and saves to `results/evaluation_results_unetpp/test_metrics.json`uvicorn app:app --host 127.0.0.1 --port 8000│   │   ├── best.pth            # Best model (83.67% val Dice)
+
+
+
+### 6️⃣ Run Web Dashboard```
+
+
+
+```bash│   │   ├── latest.pth          # Latest checkpoint- **[train_optimized.py](train_optimized.py)** ⭐ - Advanced training (recommended)
+
+cd dashboard
+
+uvicorn app:app --reload --host localhost --port 8000Then open: **http://localhost:8000**
+
+```
 
 │   │   ├── metrics.json        # Training history- **[train_improved.py](train_improved.py)** - Basic training script
+
+Open browser: [http://localhost:8000](http://localhost:8000)
+
+**Features:**
 
 **Features:**
 
 - 📤 Drag & drop image upload│   │   └── training_history.png- **[config_optimized.py](config_optimized.py)** - Optimized hyperparameters
 
-- 🔍 Real-time vessel segmentation
+- 🖼️ Drag-and-drop image upload
 
-- 📊 Probability heatmaps│   ├── evaluation_results_unetpp/  # Test set results- **[unet.py](unet.py)** - U-Net model architecture
+- ⚡ Real-time segmentation (<1s)- 🔍 Real-time vessel segmentation
 
-- 🎨 Overlay visualizations
+- 📊 4 visualization modes: Original, Mask, Overlay, Heatmap
 
-- 📈 Statistical metrics│   │   ├── test_metrics.json- **[dataloader.py](dataloader.py)** - Dataset loading with augmentation
+- 📈 Interactive dashboard with metrics- 📊 Probability heatmaps│   ├── evaluation_results_unetpp/  # Test set results- **[unet.py](unet.py)** - U-Net model architecture
+
+- 💾 Recent uploads history
+
+- 🎨 Professional medical UI design- 🎨 Overlay visualizations
 
 
 
-### 4️⃣ Inference on Custom Image│   │   └── prediction_*.png- **[inference.py](inference.py)** - Make predictions on new images
+## 🧠 Model Architecture- 📈 Statistical metrics│   │   ├── test_metrics.json- **[dataloader.py](dataloader.py)** - Dataset loading with augmentation
 
 
 
-```bash│   └── test_result.png         # Quick test output- **[evaluate_results.py](evaluate_results.py)** - Calculate metrics
+### U-Net++ (Nested U-Net)
 
-python run_on_custom_image.py "path/to/image.png" "output.png"
+
+
+Advanced encoder-decoder architecture with nested skip connections:### 4️⃣ Inference on Custom Image│   │   └── prediction_*.png- **[inference.py](inference.py)** - Make predictions on new images
+
+
+
+```text
+
+Encoder: 5 levels (16→32→64→128→256 channels)
+
+Skip Connections: Dense nested pathways (X^0,1 to X^0,4)```bash│   └── test_result.png         # Quick test output- **[evaluate_results.py](evaluate_results.py)** - Calculate metrics
+
+Decoder: 4 levels with concatenated features
+
+Output: Sigmoid activation → Binary maskpython run_on_custom_image.py "path/to/image.png" "output.png"
+
+```
 
 ```│- **[visualize.py](visualize.py)** - Visualization tools
 
-
-
----├── docs/                        # Documentation
-
-
-
-## 📁 Project Structure│   ├── README_UNETPP.md        # Detailed U-Net++ docs## 🎯 Features
+**Key Features:**
 
 
 
-```│   └── FINAL_RESULTS.md        # Complete results report
+- **9.0M parameters** (efficient yet powerful)
 
-retina-unet-segmentation/
+- **Deep supervision** during training---├── docs/                        # Documentation
+
+- **Dense skip connections** for better gradient flow
+
+- **Batch normalization** for stable training
+
+
+
+## 🔬 Dataset## 📁 Project Structure│   ├── README_UNETPP.md        # Detailed U-Net++ docs## 🎯 Features
+
+
+
+### DRIVE (Digital Retinal Images for Vessel Extraction)
+
+
+
+- **Training Set:** 20 fundus images + manual segmentations```│   └── FINAL_RESULTS.md        # Complete results report
+
+- **Test Set:** 20 fundus images + ground truth
+
+- **Resolution:** 565×584 pixels (resized to 512×512)retina-unet-segmentation/
+
+- **Format:** RGB images + binary masks
 
 ├── models/                      # Model architectures│✅ **Optimized U-Net** - 31M parameters for precise segmentation  
 
+**Preprocessing:**
+
 │   ├── unet_plus_plus.py       # U-Net++ implementation (9.0M params)
 
-│   └── losses_unetpp.py        # Loss functions & metrics├── Retina/                      # DRIVE dataset✅ **Combined Loss** - Dice + CrossEntropy for better results  
+1. Resize to 512×512
 
-│
+2. Normalize to [0, 1]│   └── losses_unetpp.py        # Loss functions & metrics├── Retina/                      # DRIVE dataset✅ **Combined Loss** - Dice + CrossEntropy for better results  
 
-├── scripts/                     # Training & inference scripts│   ├── train/                  # 20 training images✅ **Data Augmentation** - Rotation, flips, elastic transforms  
+3. Data augmentation (training only)
 
-│   ├── train_unetpp.py         # Training script
+4. Automatic vessel mask extraction│
 
-│   ├── evaluate_unetpp.py      # Evaluation on test set│   └── test/                   # 20 test images✅ **Mixed Precision** - Faster training with AMP  
 
-│   ├── test_model.py           # Quick model test
 
-│   ├── dataloader_unetpp.py    # Data loading & augmentation│✅ **GPU Accelerated** - CUDA support for RTX/T4 GPUs  
+## 📊 Results├── scripts/                     # Training & inference scripts│   ├── train/                  # 20 training images✅ **Data Augmentation** - Rotation, flips, elastic transforms  
 
-│   └── inference.py            # Single image inference
+
+
+### Quantitative Metrics│   ├── train_unetpp.py         # Training script
+
+
+
+| Metric | Formula | Score |│   ├── evaluate_unetpp.py      # Evaluation on test set│   └── test/                   # 20 test images✅ **Mixed Precision** - Faster training with AMP  
+
+|--------|---------|-------|
+
+| Dice Coefficient | 2TP / (2TP + FP + FN) | **83.82%** |│   ├── test_model.py           # Quick model test
+
+| IoU (Jaccard) | TP / (TP + FP + FN) | **72.13%** |
+
+| Accuracy | (TP + TN) / Total | **96.08%** |│   ├── dataloader_unetpp.py    # Data loading & augmentation│✅ **GPU Accelerated** - CUDA support for RTX/T4 GPUs  
+
+| Sensitivity | TP / (TP + FN) | **82.91%** |
+
+| Specificity | TN / (TN + FP) | **97.97%** |│   └── inference.py            # Single image inference
+
+| AUC-ROC | Area Under ROC Curve | **97.82%** |
 
 │├── requirements.txt             # Old dependencies (legacy)✅ **Complete Pipeline** - Training to inference
 
+### Qualitative Results
+
 ├── dashboard/                   # Web interface
+
+**Visual Inspection:**
 
 │   ├── app.py                  # FastAPI backend├── requirements_unetpp.txt      # U-Net++ dependencies
 
-│   ├── templates/              # HTML templates
+- ✅ Accurate vessel detection (major & minor vessels)
 
-│   └── static/                 # CSS & JavaScript├── unet.py                      # Legacy U-Net## 📖 Project Structure
+- ✅ Clean boundaries with minimal noise│   ├── templates/              # HTML templates
+
+- ✅ Correct vessel width preservation
+
+- ✅ Low false positive rate│   └── static/                 # CSS & JavaScript├── unet.py                      # Legacy U-Net## 📖 Project Structure
+
+
+
+**Example Results:**│
+
+
+
+![Sample Segmentation](results/test_result.png)├── results/                     # Training outputs├── dataloader.py                # Legacy dataloader
+
+
+
+*4-panel view: Original Image | Ground Truth | Prediction | Overlay*│   ├── checkpoints_unetpp/     # Model checkpoints
+
+
+
+## 🛠️ Usage Examples│   │   ├── best.pth            # Best model (83.82% Dice)├── utils.py                     # Utility functions```text
+
+
+
+### Inference on Single Image│   │   └── metrics.json        # Training history
+
+
+
+```python│   └── evaluation_results_unetpp/  # Test set results└── download_datasets.py         # Dataset download scriptRetina-Unet/
+
+from scripts.inference import segment_image
 
 │
 
-├── results/                     # Training outputs├── dataloader.py                # Legacy dataloader
+# Load and segment image
 
-│   ├── checkpoints_unetpp/     # Model checkpoints
+result = segment_image('path/to/retina_image.png')├── Retina/                      # DRIVE dataset```├── 🎯 Core Files
 
-│   │   ├── best.pth            # Best model (83.82% Dice)├── utils.py                     # Utility functions```text
 
-│   │   └── metrics.json        # Training history
 
-│   └── evaluation_results_unetpp/  # Test set results└── download_datasets.py         # Dataset download scriptRetina-Unet/
+# result contains:│   ├── train/                  # 80 training images
 
-│
+# - 'original': Original image
 
-├── Retina/                      # DRIVE dataset```├── 🎯 Core Files
+# - 'mask': Binary segmentation mask│   └── test/                   # 20 test images│   ├── unet.py                        # U-Net model architecture (31M params)
 
-│   ├── train/                  # 80 training images
+# - 'overlay': Overlay visualization
 
-│   └── test/                   # 20 test images│   ├── unet.py                        # U-Net model architecture (31M params)
+# - 'heatmap': Probability heatmap│
 
-│
+```
 
 ├── requirements_unetpp.txt      # Python dependencies---│   ├── dataloader.py                  # Dataset loading with augmentation
 
+### Custom Training
+
 └── run_on_custom_image.py      # Simple inference script
 
-```│   ├── utils.py                       # Helper functions (Dice, IoU)
+```python
+
+from scripts.train_unetpp import train_model```│   ├── utils.py                       # Helper functions (Dice, IoU)
 
 
 
----## 🚀 Quick Start│   └── inference.py                   # Predict on new images
+# Train with custom parameters
+
+train_model(
+
+    epochs=15,---## 🚀 Quick Start│   └── inference.py                   # Predict on new images
+
+    batch_size=8,
+
+    learning_rate=0.0005,
+
+    checkpoint_dir='results/my_checkpoints/'
+
+)## 🏗️ Model Architecture│
+
+```
 
 
 
-## 🏗️ Model Architecture│
-
-
+### Batch Processing
 
 **U-Net++ (Nested U-Net)** with key features:### 1️⃣ Installation├── 🚀 Training
 
-
-
-✨ **Nested Skip Connections** - Dense connections for better feature propagation  │   ├── train_optimized.py             # Advanced training (recommended) ⭐
-
-✨ **Deep Supervision** - 4 output heads with weighted loss  
-
-✨ **9.0M Parameters** - Optimized for retinal vessel segmentation  ```bash│   ├── train_improved.py              # Basic training script
-
-✨ **Mixed Precision Training** - FP16 for faster training
-
-# Clone repository│   ├── config_optimized.py            # Optimized hyperparameters
-
-**Architecture Highlights:**
-
-- **Encoder:** 5 levels (32→64→128→256→512 filters)git clone https://github.com/GauravPatil2515/Retina-Unet.git│   └── config.py                      # Basic configuration
-
-- **Decoder:** Nested structure with intermediate supervision
-
-- **Skip Connections:** Dense connections at each levelcd retina-unet-segmentation│
-
-- **Output:** Sigmoid activation for vessel probability
-
-├── 📊 Evaluation
-
----
-
-# Install dependencies│   ├── evaluate_results.py            # Calculate metrics (Dice, IoU, Acc)
-
-## 🎓 Training
-
-pip install -r requirements_unetpp.txt│   └── visualize.py                   # Visualization tools
-
-### Train from Scratch
-
-```│
-
 ```bash
 
-python scripts/train_unetpp.py├──  Other
+# Process multiple images
+
+python scripts/inference.py --input_dir images/ --output_dir results/
+
+```✨ **Nested Skip Connections** - Dense connections for better feature propagation  │   ├── train_optimized.py             # Advanced training (recommended) ⭐
+
+
+
+## 📈 Training Details✨ **Deep Supervision** - 4 output heads with weighted loss  
+
+
+
+### Loss Function✨ **9.0M Parameters** - Optimized for retinal vessel segmentation  ```bash│   ├── train_improved.py              # Basic training script
+
+
+
+**BCEDiceLoss** (combined loss):✨ **Mixed Precision Training** - FP16 for faster training
+
+
+
+```python# Clone repository│   ├── config_optimized.py            # Optimized hyperparameters
+
+Loss = BCE_Loss + Dice_Loss
+
+BCE_Loss = -[y*log(p) + (1-y)*log(1-p)]**Architecture Highlights:**
+
+Dice_Loss = 1 - (2*|X∩Y| / |X|+|Y|)
+
+```- **Encoder:** 5 levels (32→64→128→256→512 filters)git clone https://github.com/GauravPatil2515/Retina-Unet.git│   └── config.py                      # Basic configuration
+
+
+
+### Optimization- **Decoder:** Nested structure with intermediate supervision
+
+
+
+- **Optimizer:** Adam- **Skip Connections:** Dense connections at each levelcd retina-unet-segmentation│
+
+- **Learning Rate:** 0.001 (constant)
+
+- **Weight Decay:** 1e-5- **Output:** Sigmoid activation for vessel probability
+
+- **Gradient Clipping:** None
+
+- **Early Stopping:** Best Dice score├── 📊 Evaluation
+
+
+
+### Data Augmentation---
+
+
+
+- Random horizontal flip (p=0.5)# Install dependencies│   ├── evaluate_results.py            # Calculate metrics (Dice, IoU, Acc)
+
+- Random vertical flip (p=0.5)
+
+- Random rotation (±15°)## 🎓 Training
+
+- Elastic deformation
+
+- Grid distortionpip install -r requirements_unetpp.txt│   └── visualize.py                   # Visualization tools
+
+
+
+## 🚧 Troubleshooting### Train from Scratch
+
+
+
+### Common Issues```│
+
+
+
+**1. CUDA Out of Memory**```bash
+
+
+
+```bashpython scripts/train_unetpp.py├──  Other
+
+# Reduce batch size
+
+python scripts/train_unetpp.py --batch_size 4```
 
 ```
 
 **Requirements:**│   ├── README.md                      # This file
 
+**2. Model Loading Error**
+
 **Training Configuration:**
 
-- **Model:** U-Net++ (9.0M parameters)- Python 3.8+│   ├── requirements.txt               # Python dependencies
+```bash
 
-- **Batch Size:** 8 (effective 16 with gradient accumulation)
+# Check checkpoint path- **Model:** U-Net++ (9.0M parameters)- Python 3.8+│   ├── requirements.txt               # Python dependencies
 
-- **Epochs:** 60 (early stopping enabled)- PyTorch 2.0+ with CUDA support│   └── download_datasets.py           # Download DRIVE/CHASE datasets
+ls results/checkpoints_unetpp/best.pth
 
-- **Learning Rate:** 1e-4 with ReduceLROnPlateau
+```- **Batch Size:** 8 (effective 16 with gradient accumulation)
 
-- **Loss:** BCE + Dice with deep supervision- 6GB+ GPU memory (RTX 3050 or better)│
+
+
+**3. Dataset Not Found**- **Epochs:** 60 (early stopping enabled)- PyTorch 2.0+ with CUDA support│   └── download_datasets.py           # Download DRIVE/CHASE datasets
+
+
+
+```bash- **Learning Rate:** 1e-4 with ReduceLROnPlateau
+
+# Re-download dataset
+
+python download_datasets.py- **Loss:** BCE + Dice with deep supervision- 6GB+ GPU memory (RTX 3050 or better)│
+
+```
 
 - **Training Time:** ~30 minutes on RTX 3050
 
+**4. Web Dashboard Not Starting**
+
 └── 📂 Data (create these folders)
 
-### Evaluate Model
+```bash
 
-### 2️⃣ Quick Test    └── Retina/
+# Check port availability### Evaluate Model
+
+cd dashboard
+
+uvicorn app:app --reload --host 127.0.0.1 --port 8001### 2️⃣ Quick Test    └── Retina/
+
+```
 
 ```bash
+
+## 🔍 File Descriptions
 
 python scripts/evaluate_unetpp.py        ├── train/
 
-```
-
-Test the trained model on a sample image:        │   ├── image/                 # Training images
-
-Outputs:
-
-- `results/evaluation_results_unetpp/test_metrics.json`        │   └── mask/                  # Training masks
-
-- `results/evaluation_results_unetpp/prediction_*.png` (sample visualizations)
-
-```bash        └── test/
-
----
-
-python scripts/test_model.py            ├── image/                 # Test images
-
-## 📊 Dataset
-
-```            └── mask/                  # Test masks
-
-**DRIVE Dataset** (Digital Retinal Images for Vessel Extraction)
+### Core Files
 
 ```
 
-- **Training:** 80 images (20 originals → 3,896 patches)
+- **`models/unet_plus_plus.py`**: U-Net++ architecture implementation
 
-- **Test:** 20 images (full resolution evaluation)Output: `results/test_result.png` with 4-panel visualization
+- **`models/losses_unetpp.py`**: Custom loss functions (BCEDiceLoss)Test the trained model on a sample image:        │   ├── image/                 # Training images
 
-- **Patch Size:** 128×128 with 50% overlap
+- **`scripts/train_unetpp.py`**: Training pipeline with checkpointing
 
-- **Augmentation:** Flips, brightness, contrast variations## 🛠️ Training Options
+- **`scripts/evaluate_unetpp.py`**: Test set evaluationOutputs:
+
+- **`scripts/dataloader_unetpp.py`**: Data loading with augmentation
+
+- **`dashboard/app.py`**: FastAPI backend with model inference- `results/evaluation_results_unetpp/test_metrics.json`        │   └── mask/                  # Training masks
 
 
 
-Download automatically with:### 3️⃣ Train Your Own Model
+### Utility Files- `results/evaluation_results_unetpp/prediction_*.png` (sample visualizations)
 
-```bash
 
-python download_datasets.py### Option 1: Optimized Training (Recommended)
 
-```
+- **`download_datasets.py`**: Automatic dataset downloader```bash        └── test/
 
-```bashBest performance with all optimizations enabled:
+- **`run_dashboard.ps1`**: PowerShell script to launch dashboard
 
----
+- **`requirements_unetpp.txt`**: Python dependencies---
 
-# Train U-Net++ from scratch```bash
+
+
+## 📚 Referencespython scripts/test_model.py            ├── image/                 # Test images
+
+
+
+### Papers## 📊 Dataset
+
+
+
+1. **U-Net++**: Zhou et al., "UNet++: A Nested U-Net Architecture for Medical Image Segmentation" (2018)```            └── mask/                  # Test masks
+
+2. **U-Net**: Ronneberger et al., "U-Net: Convolutional Networks for Biomedical Image Segmentation" (2015)
+
+3. **DRIVE Dataset**: Staal et al., "Ridge-based vessel segmentation in color images of the retina" (2004)**DRIVE Dataset** (Digital Retinal Images for Vessel Extraction)
+
+
+
+### Resources```
+
+
+
+- PyTorch Documentation: <https://pytorch.org/docs/>- **Training:** 80 images (20 originals → 3,896 patches)
+
+- FastAPI Documentation: <https://fastapi.tiangolo.com/>
+
+- DRIVE Dataset: <https://drive.grand-challenge.org/>- **Test:** 20 images (full resolution evaluation)Output: `results/test_result.png` with 4-panel visualization
+
+
+
+## 🤝 Contributing- **Patch Size:** 128×128 with 50% overlap
+
+
+
+Contributions are welcome! Please follow these steps:- **Augmentation:** Flips, brightness, contrast variations## 🛠️ Training Options
+
+
+
+1. Fork the repository
+
+2. Create a feature branch (`git checkout -b feature/YourFeature`)
+
+3. Commit your changes (`git commit -m 'Add YourFeature'`)Download automatically with:### 3️⃣ Train Your Own Model
+
+4. Push to the branch (`git push origin feature/YourFeature`)
+
+5. Open a Pull Request```bash
+
+
+
+## 📝 Licensepython download_datasets.py### Option 1: Optimized Training (Recommended)
+
+
+
+This project is licensed under the MIT License. See [LICENSE](LICENSE) file for details.```
+
+
+
+## 👨‍💻 Author```bashBest performance with all optimizations enabled:
+
+
+
+**Gaurav Patil**---
+
+
+
+- GitHub: [@GauravPatil2515](https://github.com/GauravPatil2515)# Train U-Net++ from scratch```bash
+
+- Repository: [Retina-Unet](https://github.com/GauravPatil2515/Retina-Unet)
 
 ## 💻 API Usage
 
+## 🙏 Acknowledgments
+
 python scripts/train_unetpp.pypython train_optimized.py
 
-### Load Pre-trained Model
+- DRIVE dataset creators for providing high-quality annotated retinal images
 
-``````
+- PyTorch team for the excellent deep learning framework### Load Pre-trained Model
 
-```python
+- U-Net++ authors for the innovative nested architecture design
 
-import torch- 200 epochs, batch size 8
+- Medical imaging community for continued support and feedback``````
 
-from models.unet_plus_plus import UNetPlusPlus
+
+
+---```python
+
+
+
+**⭐ Star this repo if you find it useful!**import torch- 200 epochs, batch size 8
+
+
+
+**🔗 Repository**: <https://github.com/GauravPatil2515/Retina-Unet>from models.unet_plus_plus import UNetPlusPlus
+
 
 **Training Configuration:**- Combined Dice + CrossEntropy loss
 

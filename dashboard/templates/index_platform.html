@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RetinaAI - Medical Vessel Segmentation Platform</title>
+    <link rel="stylesheet" href="/static/style_platform.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Left Sidebar Navigation -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <div class="logo">
+                <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+                    <circle cx="16" cy="16" r="14" stroke="#C2185B" stroke-width="2"/>
+                    <path d="M12 16 C12 16, 14 12, 16 12 S20 16, 20 16 S18 20, 16 20 S12 16, 12 16" stroke="#C2185B" stroke-width="1.5" fill="none"/>
+                    <circle cx="16" cy="16" r="2" fill="#C2185B"/>
+                </svg>
+                <span class="logo-text">RetinaAI</span>
+            </div>
+            <div class="version">v1.0 Pro</div>
+        </div>
+
+        <nav class="sidebar-nav">
+            <a href="#" class="nav-item active" data-page="home">
+                <svg class="nav-icon" width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                    <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"/>
+                </svg>
+                <span>Home</span>
+            </a>
+            <a href="#" class="nav-item" data-page="dashboard">
+                <svg class="nav-icon" width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                    <path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z"/>
+                </svg>
+                <span>Dashboard</span>
+            </a>
+            <a href="#" class="nav-item" data-page="history">
+                <svg class="nav-icon" width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                    <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"/>
+                    <path fill-rule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z"/>
+                </svg>
+                <span>History</span>
+            </a>
+            <a href="#" class="nav-item" data-page="about">
+                <svg class="nav-icon" width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"/>
+                </svg>
+                <span>About</span>
+            </a>
+            <a href="#" class="nav-item" data-page="settings">
+                <svg class="nav-icon" width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z"/>
+                </svg>
+                <span>Settings</span>
+            </a>
+        </nav>
+
+        <div class="sidebar-footer">
+            <div class="model-status">
+                <div class="status-indicator online"></div>
+                <div class="status-text">
+                    <div class="status-title">Model Active</div>
+                    <div class="status-subtitle">U-Net++ v2.0</div>
+                </div>
+            </div>
+            <div class="quick-stats">
+                <div class="quick-stat">
+                    <div class="quick-stat-label">Accuracy</div>
+                    <div class="quick-stat-value">96.08%</div>
+                </div>
+                <div class="quick-stat">
+                    <div class="quick-stat-label">Processing</div>
+                    <div class="quick-stat-value">&lt;1s</div>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Home Page -->
+        <div id="page-home" class="page active">
+            <!-- Compact Hero Section -->
+            <section class="hero-compact">
+                <h1 class="hero-compact-title">AI-Powered Retinal Vessel Analysis</h1>
+                <p class="hero-compact-subtitle">Automated blood vessel segmentation with 83.82% accuracy in under 1 second</p>
+                <div class="hero-compact-actions">
+                    <button class="btn btn-primary" onclick="navigateTo('dashboard')">Start Analysis →</button>
+                    <button class="btn btn-secondary" onclick="navigateTo('about')">Learn More</button>
+                </div>
+            </section>
+
+            <!-- Stats Row (4 Cards) -->
+            <section class="stats-row">
+                <div class="stat-card-mini">
+                    <div class="stat-card-value">1,247</div>
+                    <div class="stat-card-label">Total Analyses</div>
+                </div>
+                <div class="stat-card-mini">
+                    <div class="stat-card-value">83.82%</div>
+                    <div class="stat-card-label">Dice Accuracy</div>
+                </div>
+                <div class="stat-card-mini">
+                    <div class="stat-card-value">&lt;1s</div>
+                    <div class="stat-card-label">Processing Time</div>
+                </div>
+                <div class="stat-card-mini">
+                    <div class="stat-card-value">96.08%</div>
+                    <div class="stat-card-label">Overall Accuracy</div>
+                </div>
+            </section>
+
+            <!-- How It Works (Horizontal) -->
+            <section class="how-it-works-compact">
+                <h2 class="section-title-compact">How It Works</h2>
+                <div class="workflow-horizontal">
+                    <div class="workflow-step-compact">
+                        <div class="step-icon-compact">
+                            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/>
+                            </svg>
+                        </div>
+                        <div class="step-title-compact">Upload Image</div>
+                        <div class="step-desc-compact">PNG, JPG, TIFF</div>
+                    </div>
+                    <div class="workflow-arrow-compact">→</div>
+                    <div class="workflow-step-compact">
+                        <div class="step-icon-compact">
+                            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="3"/>
+                                <path d="M12 1v6m0 6v6m-6-6h6m6 0h-6"/>
+                            </svg>
+                        </div>
+                        <div class="step-title-compact">AI Processing</div>
+                        <div class="step-desc-compact">U-Net++ 96%</div>
+                    </div>
+                    <div class="workflow-arrow-compact">→</div>
+                    <div class="workflow-step-compact">
+                        <div class="step-icon-compact">
+                            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M18 20V10M12 20V4M6 20v-6"/>
+                            </svg>
+                        </div>
+                        <div class="step-title-compact">Get Results</div>
+                        <div class="step-desc-compact">4 visualizations</div>
+                    </div>
+                    <div class="workflow-arrow-compact">→</div>
+                    <div class="workflow-step-compact">
+                        <div class="step-icon-compact">
+                            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/>
+                            </svg>
+                        </div>
+                        <div class="step-title-compact">Export</div>
+                        <div class="step-desc-compact">Save & share</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Clinical Applications (4 Cards Row) -->
+            <section class="clinical-apps-compact">
+                <h2 class="section-title-compact">Clinical Applications</h2>
+                <div class="apps-grid-compact">
+                    <div class="app-card-compact">
+                        <div class="app-icon-compact">
+                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+                            </svg>
+                        </div>
+                        <h3 class="app-title-compact">Diabetic Retinopathy</h3>
+                        <p class="app-desc-compact">Early microvascular detection</p>
+                    </div>
+                    <div class="app-card-compact">
+                        <div class="app-icon-compact">
+                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"/>
+                                <path d="M12 6v6l4 2"/>
+                            </svg>
+                        </div>
+                        <h3 class="app-title-compact">Hypertensive Retinopathy</h3>
+                        <p class="app-desc-compact">Monitor arterial changes</p>
+                    </div>
+                    <div class="app-card-compact">
+                        <div class="app-icon-compact">
+                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                                <circle cx="12" cy="12" r="3"/>
+                            </svg>
+                        </div>
+                        <h3 class="app-title-compact">Glaucoma Assessment</h3>
+                        <p class="app-desc-compact">Optic nerve analysis</p>
+                    </div>
+                    <div class="app-card-compact">
+                        <div class="app-icon-compact">
+                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                                <polyline points="14 2 14 8 20 8"/>
+                                <line x1="16" y1="13" x2="8" y2="13"/>
+                                <line x1="16" y1="17" x2="8" y2="17"/>
+                                <polyline points="10 9 9 9 8 9"/>
+                            </svg>
+                        </div>
+                        <h3 class="app-title-compact">Research & Studies</h3>
+                        <p class="app-desc-compact">Clinical data analysis</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Dashboard Page -->
+        <div id="page-dashboard" class="page">
+            <div class="page-header">
+                <h1 class="page-title">Analysis Dashboard</h1>
+                <p class="page-subtitle">Upload retinal images for AI-powered vessel segmentation</p>
+            </div>
+
+            <!-- Performance Metrics (Compact) -->
+            <div class="metrics-grid-compact">
+                <div class="metric-card">
+                    <div class="metric-header">
+                        <div class="metric-label">Dice Coefficient</div>
+                        <div class="metric-tooltip" title="Overlap measure">ⓘ</div>
+                    </div>
+                    <div class="metric-value">83.82%</div>
+                    <div class="metric-progress">
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 83.82%"></div>
+                        </div>
+                        <div class="progress-range">Target: 78-85%</div>
+                    </div>
+                    <canvas class="sparkline" id="sparkline-dice" width="200" height="40"></canvas>
+                </div>
+
+                <div class="metric-card">
+                    <div class="metric-header">
+                        <div class="metric-label">Accuracy</div>
+                        <div class="metric-tooltip" title="Pixel classification">ⓘ</div>
+                    </div>
+                    <div class="metric-value">96.08%</div>
+                    <div class="metric-progress">
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 96.08%"></div>
+                        </div>
+                        <div class="progress-range">Target: 94-96%</div>
+                    </div>
+                    <canvas class="sparkline" id="sparkline-accuracy" width="200" height="40"></canvas>
+                </div>
+
+                <div class="metric-card">
+                    <div class="metric-header">
+                        <div class="metric-label">Sensitivity</div>
+                        <div class="metric-tooltip" title="True positive rate">ⓘ</div>
+                    </div>
+                    <div class="metric-value">82.91%</div>
+                    <div class="metric-progress">
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 82.91%"></div>
+                        </div>
+                        <div class="progress-range">Target: 75-82%</div>
+                    </div>
+                    <canvas class="sparkline" id="sparkline-sensitivity" width="200" height="40"></canvas>
+                </div>
+
+                <div class="metric-card">
+                    <div class="metric-header">
+                        <div class="metric-label">Specificity</div>
+                        <div class="metric-tooltip" title="True negative rate">ⓘ</div>
+                    </div>
+                    <div class="metric-value">97.97%</div>
+                    <div class="metric-progress">
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 97.97%"></div>
+                        </div>
+                        <div class="progress-range">Target: 96-98%</div>
+                    </div>
+                    <canvas class="sparkline" id="sparkline-specificity" width="200" height="40"></canvas>
+                </div>
+            </div>
+
+            <!-- Upload and Results Section -->
+            <div class="dashboard-content">
+                <div class="upload-section">
+                    <div class="card upload-card">
+                        <h2 class="card-title">Upload Retinal Image</h2>
+                        <div class="upload-zone" id="uploadZone">
+                            <svg class="upload-icon" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/>
+                            </svg>
+                            <p class="upload-text">Drag & drop retinal image here</p>
+                            <p class="upload-subtext">or click to browse</p>
+                            <input type="file" id="imageInput" accept="image/*" hidden>
+                        </div>
+                        <div id="loadingIndicator" class="loading-indicator" style="display: none;">
+                            <div class="spinner"></div>
+                            <p>Processing image...</p>
+                        </div>
+                    </div>
+
+                    <div id="resultsPreview" class="card results-preview" style="display: none;">
+                        <h3 class="card-title">Quick Preview</h3>
+                        <div class="preview-grid">
+                            <div class="preview-item">
+                                <img id="previewOriginal" alt="Original">
+                                <span>Original</span>
+                            </div>
+                            <div class="preview-item">
+                                <img id="previewSegmentation" alt="Segmentation">
+                                <span>Vessels</span>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary btn-block" onclick="showFullResults()">View Full Results</button>
+                    </div>
+                </div>
+
+                <div class="recent-uploads-sidebar">
+                    <div class="card">
+                        <h3 class="card-title">Recent Uploads</h3>
+                        <div id="recentList" class="recent-list">
+                            <p class="empty-state">No recent analyses</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Full Results Modal -->
+            <div id="resultsModal" class="modal">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2>Analysis Results</h2>
+                        <button class="modal-close" onclick="closeResults()">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="results-grid">
+                            <div class="result-panel">
+                                <h3>Original Image</h3>
+                                <img id="resultOriginal" alt="Original">
+                            </div>
+                            <div class="result-panel">
+                                <h3>Probability Map</h3>
+                                <img id="resultProbability" alt="Probability">
+                            </div>
+                            <div class="result-panel">
+                                <h3>Binary Segmentation</h3>
+                                <img id="resultBinary" alt="Binary">
+                            </div>
+                            <div class="result-panel">
+                                <h3>Overlay View</h3>
+                                <img id="resultOverlay" alt="Overlay">
+                            </div>
+                        </div>
+                        <div class="results-stats">
+                            <div class="stat-item">
+                                <span class="stat-label">Vessel Coverage</span>
+                                <span class="stat-value" id="statCoverage">-</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">Mean Confidence</span>
+                                <span class="stat-value" id="statConfidence">-</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">Image Size</span>
+                                <span class="stat-value" id="statSize">-</span>
+                            </div>
+                        </div>
+                        <div class="modal-actions">
+                            <button class="btn btn-secondary" onclick="downloadResults()">Download Results</button>
+                            <button class="btn btn-primary" onclick="saveToHistory()">Save to History</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- History Page -->
+        <div id="page-history" class="page">
+            <div class="page-header">
+                <h1 class="page-title">Analysis History</h1>
+                <div class="page-actions">
+                    <input type="text" id="historySearch" placeholder="Search analyses..." class="search-input">
+                    <select id="historyFilter" class="filter-select">
+                        <option value="all">All Results</option>
+                        <option value="today">Today</option>
+                        <option value="week">This Week</option>
+                        <option value="month">This Month</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="card">
+                <table class="history-table">
+                    <thead>
+                        <tr>
+                            <th>Preview</th>
+                            <th>Date & Time</th>
+                            <th>Image Name</th>
+                            <th>Vessel Coverage</th>
+                            <th>Confidence</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="historyTableBody">
+                        <tr>
+                            <td colspan="7" class="empty-state">No analysis history available</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- About Page -->
+        <div id="page-about" class="page">
+            <div class="page-header">
+                <h1 class="page-title">About RetinaAI</h1>
+                <p class="page-subtitle">Enterprise-grade retinal vessel segmentation platform</p>
+            </div>
+
+            <!-- Architecture Section -->
+            <div class="card">
+                <h2 class="card-title">U-Net++ Architecture</h2>
+                <div class="architecture-grid">
+                    <div class="arch-spec">
+                        <div class="arch-icon">🧠</div>
+                        <div class="arch-label">Total Parameters</div>
+                        <div class="arch-value">9.0M</div>
+                    </div>
+                    <div class="arch-spec">
+                        <div class="arch-icon">🔗</div>
+                        <div class="arch-label">Architecture</div>
+                        <div class="arch-value">Nested U-Net</div>
+                    </div>
+                    <div class="arch-spec">
+                        <div class="arch-icon">📊</div>
+                        <div class="arch-label">Skip Connections</div>
+                        <div class="arch-value">Dense Nested</div>
+                    </div>
+                    <div class="arch-spec">
+                        <div class="arch-icon">🎯</div>
+                        <div class="arch-label">Deep Supervision</div>
+                        <div class="arch-value">4 Output Heads</div>
+                    </div>
+                </div>
+
+                <div class="architecture-features">
+                    <h3>Key Features</h3>
+                    <ul class="feature-list">
+                        <li><strong>Nested Skip Pathways:</strong> Enhanced feature propagation between encoder and decoder</li>
+                        <li><strong>Deep Supervision:</strong> Multiple output layers for robust gradient flow</li>
+                        <li><strong>Mixed Precision Training:</strong> FP16 computation for faster processing</li>
+                        <li><strong>Gradient Accumulation:</strong> Effective batch size of 16 for stable training</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Training Configuration -->
+            <div class="card">
+                <h2 class="card-title">Training Configuration</h2>
+                <div class="config-grid">
+                    <div class="config-section">
+                        <h3>Optimizer</h3>
+                        <table class="config-table">
+                            <tr>
+                                <td>Algorithm</td>
+                                <td><strong>Adam</strong></td>
+                            </tr>
+                            <tr>
+                                <td>Learning Rate</td>
+                                <td><strong>1e-4</strong></td>
+                            </tr>
+                            <tr>
+                                <td>Weight Decay</td>
+                                <td><strong>1e-5</strong></td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="config-section">
+                        <h3>Scheduler</h3>
+                        <table class="config-table">
+                            <tr>
+                                <td>Type</td>
+                                <td><strong>ReduceLROnPlateau</strong></td>
+                            </tr>
+                            <tr>
+                                <td>Patience</td>
+                                <td><strong>5 epochs</strong></td>
+                            </tr>
+                            <tr>
+                                <td>Factor</td>
+                                <td><strong>0.5</strong></td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="config-section">
+                        <h3>Training Strategy</h3>
+                        <table class="config-table">
+                            <tr>
+                                <td>Early Stopping</td>
+                                <td><strong>10 epochs</strong></td>
+                            </tr>
+                            <tr>
+                                <td>Batch Size</td>
+                                <td><strong>8 (×2 accum)</strong></td>
+                            </tr>
+                            <tr>
+                                <td>Epochs</td>
+                                <td><strong>60 max</strong></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Clinical Applications -->
+            <div class="card">
+                <h2 class="card-title">Clinical Applications</h2>
+                <div class="clinical-apps">
+                    <div class="clinical-app">
+                        <h3>Diabetic Retinopathy Screening</h3>
+                        <p>Automated detection of microaneurysms, hemorrhages, and neovascularization patterns</p>
+                        <div class="app-metrics">
+                            <span class="metric-badge">Sensitivity: 82.91%</span>
+                            <span class="metric-badge">Processing: &lt;1s</span>
+                        </div>
+                    </div>
+                    <div class="clinical-app">
+                        <h3>Hypertension Monitoring</h3>
+                        <p>Quantitative analysis of arterial caliber changes and arteriovenous ratios</p>
+                        <div class="app-metrics">
+                            <span class="metric-badge">Accuracy: 96.08%</span>
+                            <span class="metric-badge">Repeatability: 99.2%</span>
+                        </div>
+                    </div>
+                    <div class="clinical-app">
+                        <h3>Research & Population Studies</h3>
+                        <p>Automated vessel analysis for clinical research applications</p>
+                        <div class="app-metrics">
+                            <span class="metric-badge">High Throughput</span>
+                            <span class="metric-badge">API Available</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Settings Page -->
+        <div id="page-settings" class="page">
+            <div class="page-header">
+                <h1 class="page-title">Settings</h1>
+                <p class="page-subtitle">Configure platform preferences</p>
+            </div>
+
+            <div class="card">
+                <h2 class="card-title">Model Settings</h2>
+                <div class="settings-group">
+                    <label class="setting-item">
+                        <span class="setting-label">Confidence Threshold</span>
+                        <input type="range" min="0" max="100" value="50" class="slider">
+                        <span class="setting-value">0.5</span>
+                    </label>
+                    <label class="setting-item">
+                        <span class="setting-label">Auto-save Results</span>
+                        <input type="checkbox" class="toggle" checked>
+                    </label>
+                    <label class="setting-item">
+                        <span class="setting-label">Show Probability Maps</span>
+                        <input type="checkbox" class="toggle" checked>
+                    </label>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2 class="card-title">Display Preferences</h2>
+                <div class="settings-group">
+                    <label class="setting-item">
+                        <span class="setting-label">Theme</span>
+                        <select class="setting-select">
+                            <option>Light (Default)</option>
+                            <option>Dark</option>
+                            <option>Auto</option>
+                        </select>
+                    </label>
+                    <label class="setting-item">
+                        <span class="setting-label">Overlay Color</span>
+                        <input type="color" value="#C2185B" class="color-picker">
+                    </label>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="/static/script_platform.js"></script>
+</body>
+</html>
