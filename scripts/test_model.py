@@ -5,13 +5,21 @@ Tests the trained U-Net++ model on a sample image
 
 import torch
 import os
-from unet_plus_plus import UNetPlusPlus
+import sys
 import matplotlib.pyplot as plt
 from PIL import Image
 import numpy as np
 
+# Add parent directory to path for imports
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+from models.unet_plus_plus import UNetPlusPlus
+
 def test_model():
     """Test the trained model on a sample test image"""
+    
+    # Setup paths
+    base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     
     # Setup
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
@@ -20,7 +28,8 @@ def test_model():
     # Load model
     print("[1/4] Loading trained model...")
     model = UNetPlusPlus(in_channels=3, out_channels=1, deep_supervision=True).to(device)
-    checkpoint = torch.load('checkpoints_unetpp/best.pth', map_location=device, weights_only=False)
+    checkpoint_path = os.path.join(base_dir, 'results', 'checkpoints_unetpp', 'best.pth')
+    checkpoint = torch.load(checkpoint_path, map_location=device, weights_only=False)
     model.load_state_dict(checkpoint['model_state_dict'])
     model.eval()
     
@@ -30,8 +39,8 @@ def test_model():
     
     # Load a test image
     print("[2/4] Loading test image...")
-    test_img_dir = os.path.join("Retina", "test", "image")
-    test_mask_dir = os.path.join("Retina", "test", "mask")
+    test_img_dir = os.path.join(base_dir, "Retina", "test", "image")
+    test_mask_dir = os.path.join(base_dir, "Retina", "test", "mask")
     
     if not os.path.exists(test_img_dir):
         print("  ERROR: Test images not found!")
@@ -97,14 +106,16 @@ def test_model():
     axes[3].axis('off')
     
     plt.tight_layout()
-    plt.savefig('test_result.png', dpi=150, bbox_inches='tight')
-    print(f"  Saved: test_result.png\n")
+    output_path = os.path.join(base_dir, 'results', 'test_result.png')
+    os.makedirs(os.path.dirname(output_path), exist_ok=True)
+    plt.savefig(output_path, dpi=150, bbox_inches='tight')
+    print(f"  Saved: {output_path}\n")
     
     print("="*60)
     print("TEST COMPLETE!")
     print("="*60)
-    print("\nModel is working correctly! ✅")
-    print(f"Result saved to: test_result.png")
+    print("\nModel is working correctly! [SUCCESS]")
+    print(f"Result saved to: {output_path}")
 
 if __name__ == "__main__":
     test_model()

@@ -22,10 +22,13 @@ from torch.optim.lr_scheduler import ReduceLROnPlateau
 from tqdm import tqdm
 import matplotlib.pyplot as plt
 
+# Add parent directory to path for imports
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 # Import custom modules
-from unet_plus_plus import UNetPlusPlus, count_parameters
-from dataloader_unetpp import create_data_loaders
-from losses_unetpp import DeepSupervisionLoss, BCEDiceLoss, dice_coefficient, calculate_metrics, MetricsTracker
+from models.unet_plus_plus import UNetPlusPlus, count_parameters
+from scripts.dataloader_unetpp import create_data_loaders
+from models.losses_unetpp import DeepSupervisionLoss, BCEDiceLoss, dice_coefficient, calculate_metrics, MetricsTracker
 
 
 # ============================================================================
@@ -35,13 +38,14 @@ from losses_unetpp import DeepSupervisionLoss, BCEDiceLoss, dice_coefficient, ca
 class Config:
     """Training configuration - based on Kaggle notebook settings"""
     
-    # Paths
-    DATA_ROOT = os.path.join(os.getcwd(), "Retina")
+    # Paths - adjust for script being in scripts/ directory
+    BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    DATA_ROOT = os.path.join(BASE_DIR, "Retina")
     TRAIN_IMG_DIR = os.path.join(DATA_ROOT, "train", "image")
     TRAIN_MASK_DIR = os.path.join(DATA_ROOT, "train", "mask")
     TEST_IMG_DIR = os.path.join(DATA_ROOT, "test", "image")
     TEST_MASK_DIR = os.path.join(DATA_ROOT, "test", "mask")
-    CHECKPOINT_DIR = "checkpoints_unetpp"
+    CHECKPOINT_DIR = os.path.join(BASE_DIR, "results", "checkpoints_unetpp")
     
     # Model
     IN_CHANNELS = 3

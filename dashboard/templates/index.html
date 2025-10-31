@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Retina U-Net++ Dashboard</title>
+    <link rel="stylesheet" href="/static/style_premium.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="dashboard">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo">
+                <h1>RetinaAI</h1>
+                <p><span class="status-indicator"></span> Model Status: Active</p>
+            </div>
+            
+            <nav class="nav-menu">
+                <ul>
+                    <li><a href="#" class="active">
+                        <i class="fas fa-chart-line"></i>
+                        <span>Statistics</span>
+                    </a></li>
+                    <li><a href="#upload-section">
+                        <i class="fas fa-upload"></i>
+                        <span>Upload</span>
+                    </a></li>
+                    <li><a href="#results-section">
+                        <i class="fas fa-images"></i>
+                        <span>Results</span>
+                    </a></li>
+                    <li><a href="#">
+                        <i class="fas fa-history"></i>
+                        <span>History</span>
+                    </a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="header">
+                <h2>Blood Vessel Segmentation</h2>
+                <div class="user-info">
+                    <div class="user-avatar">MA</div>
+                    <div>
+                        <p>Medical AI Administrator</p>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Performance Metrics -->
+            <section class="metrics-grid">
+                <div class="metric-card">
+                    <div class="metric-icon dice">
+                        <i class="fas fa-bullseye"></i>
+                    </div>
+                    <div class="metric-value">{{ metrics.dice }}%</div>
+                    <div class="metric-label">Dice Coefficient</div>
+                    <span class="metric-badge excellent">Excellent</span>
+                </div>
+
+                <div class="metric-card">
+                    <div class="metric-icon accuracy">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <div class="metric-value">{{ metrics.accuracy }}%</div>
+                    <div class="metric-label">Accuracy</div>
+                    <span class="metric-badge excellent">Excellent</span>
+                </div>
+
+                <div class="metric-card">
+                    <div class="metric-icon sensitivity">
+                        <i class="fas fa-search-plus"></i>
+                    </div>
+                    <div class="metric-value">{{ metrics.sensitivity }}%</div>
+                    <div class="metric-label">Sensitivity</div>
+                    <span class="metric-badge good">Good</span>
+                </div>
+
+                <div class="metric-card">
+                    <div class="metric-icon specificity">
+                        <i class="fas fa-filter"></i>
+                    </div>
+                    <div class="metric-value">{{ metrics.specificity }}%</div>
+                    <div class="metric-label">Specificity</div>
+                    <span class="metric-badge excellent">Excellent</span>
+                </div>
+            </section>
+
+            <!-- Upload Section -->
+            <section id="upload-section" class="upload-section">
+                <div class="section-header">
+                    <h3><i class="fas fa-upload"></i> Upload Retinal Image</h3>
+                    <p>Upload a retinal fundus image for blood vessel segmentation</p>
+                </div>
+                
+                <div class="upload-container">
+                    <div class="upload-area" id="uploadArea">
+                        <i class="fas fa-cloud-upload-alt upload-icon"></i>
+                        <h4>Drag & Drop Image Here</h4>
+                        <p>or click to browse</p>
+                        <input type="file" id="fileInput" accept="image/*" style="display: none;">
+                        <button class="btn-primary" onclick="document.getElementById('fileInput').click()">
+                            <i class="fas fa-folder-open"></i> Select Image
+                        </button>
+                    </div>
+                    
+                    <div class="upload-info">
+                        <h4><i class="fas fa-info-circle"></i> Upload Guidelines</h4>
+                        <ul>
+                            <li><i class="fas fa-check"></i> Supported formats: PNG, JPG, JPEG</li>
+                            <li><i class="fas fa-check"></i> Recommended size: 512x512 pixels</li>
+                            <li><i class="fas fa-check"></i> RGB color images only</li>
+                            <li><i class="fas fa-check"></i> Clear retinal fundus images</li>
+                        </ul>
+                        
+                        <div class="model-info">
+                            <h5>Model Information</h5>
+                            <div class="info-row">
+                                <span>Architecture:</span>
+                                <strong>U-Net++</strong>
+                            </div>
+                            <div class="info-row">
+                                <span>Parameters:</span>
+                                <strong>9.0M</strong>
+                            </div>
+                            <div class="info-row">
+                                <span>Training Epoch:</span>
+                                <strong>{{ checkpoint_info.epoch }}</strong>
+                            </div>
+                            <div class="info-row">
+                                <span>Val Dice:</span>
+                                <strong>{{ "%.4f"|format(checkpoint_info.dice) }}</strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Results Section -->
+            <section id="results-section" class="results-section" style="display: none;">
+                <div class="section-header">
+                    <h3><i class="fas fa-images"></i> Segmentation Results</h3>
+                    <button class="btn-secondary" onclick="resetUpload()">
+                        <i class="fas fa-redo"></i> New Analysis
+                    </button>
+                </div>
+                
+                <div class="results-stats">
+                    <div class="stat-box">
+                        <i class="fas fa-percentage"></i>
+                        <div>
+                            <p>Vessel Coverage</p>
+                            <h4 id="statCoverage">0%</h4>
+                        </div>
+                    </div>
+                    <div class="stat-box">
+                        <i class="fas fa-brain"></i>
+                        <div>
+                            <p>Confidence</p>
+                            <h4 id="statConfidence">0.0000</h4>
+                        </div>
+                    </div>
+                    <div class="stat-box">
+                        <i class="fas fa-image"></i>
+                        <div>
+                            <p>Image Size</p>
+                            <h4 id="statSize">0x0</h4>
+                        </div>
+                    </div>
+                    <div class="stat-box">
+                        <i class="fas fa-clock"></i>
+                        <div>
+                            <p>Processing Time</p>
+                            <h4 id="statTime">0.0s</h4>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="results-grid">
+                    <div class="result-card">
+                        <h4>Original Image</h4>
+                        <img id="resultOriginal" alt="Original">
+                    </div>
+                    <div class="result-card">
+                        <h4>Probability Map</h4>
+                        <img id="resultProbability" alt="Probability">
+                    </div>
+                    <div class="result-card">
+                        <h4>Binary Segmentation</h4>
+                        <img id="resultBinary" alt="Binary">
+                    </div>
+                    <div class="result-card">
+                        <h4>Vessel Overlay</h4>
+                        <img id="resultOverlay" alt="Overlay">
+                    </div>
+                </div>
+            </section>
+
+            <!-- Loading Spinner -->
+            <div id="loadingSpinner" class="loading-spinner" style="display: none;">
+                <div class="spinner"></div>
+                <p>Processing image...</p>
+            </div>
+        </main>
+    </div>
+
+    <script src="/static/script.js"></script>
+</body>
+</html>

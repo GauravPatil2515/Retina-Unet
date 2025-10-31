@@ -180,6 +180,10 @@ results/*.png
 *.png
 !docs/*.png
 
+# Dashboard temporary files
+dashboard/history.json
+dashboard/__pycache__/
+
 # Logs
 train-log.txt
 *.log
@@ -190,3 +194,12 @@ Thumbs.db
 
 # Legacy/backup files
 legacy/
+
+# Temporary test files
+test_*.py
+project_status.py
+create_banner.py
+DASHBOARD_COMPLETE.md
+PREMIUM_DASHBOARD_COMPLETE.md
+TEST_RESULTS.md
+EXECUTION_SUMMARY.md

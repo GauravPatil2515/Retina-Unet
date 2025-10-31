@@ -4,15 +4,19 @@ Load trained model and evaluate on test set with comprehensive metrics
 """
 
 import os
+import sys
 import numpy as np
 import torch
 from torch.utils.data import DataLoader
 from tqdm import tqdm
 import matplotlib.pyplot as plt
 
-from unet_plus_plus import UNetPlusPlus
-from dataloader_unetpp import FullImageDataset
-from losses_unetpp import calculate_metrics
+# Add parent directory to path for imports
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+from models.unet_plus_plus import UNetPlusPlus
+from scripts.dataloader_unetpp import FullImageDataset
+from models.losses_unetpp import calculate_metrics
 
 
 def calculate_metrics_from_probs(pred, target, threshold=0.5):
