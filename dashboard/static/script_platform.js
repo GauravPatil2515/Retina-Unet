@@ -487,21 +487,37 @@ function initializeProgressBars() {
 // Download Functions
 function downloadImage(imageId, filename) {
     const img = document.getElementById(imageId);
-    if (!img) return;
+    if (!img || !img.src) {
+        console.error(`Image not found: ${imageId}`);
+        return;
+    }
     
-    const link = document.createElement('a');
-    link.href = img.src;
-    link.download = filename;
-    link.click();
+    fetch(img.src)
+        .then(res => res.blob())
+        .then(blob => {
+            const url = window.URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = filename;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            window.URL.revokeObjectURL(url);
+        })
+        .catch(err => console.error('Download failed:', err));
 }
 
 function downloadResults() {
-    if (!window.currentResult) return;
+    if (!window.currentResult) {
+        alert('No results available to download');
+        return;
+    }
     
-    downloadImage('modal-original', 'original.png');
-    setTimeout(() => downloadImage('modal-mask', 'mask.png'), 100);
-    setTimeout(() => downloadImage('modal-overlay', 'overlay.png'), 200);
-    setTimeout(() => downloadImage('modal-heatmap', 'heatmap.png'), 300);
+    // Use correct modal image IDs
+    downloadImage('resultOriginal', 'retina_original.png');
+    setTimeout(() => downloadImage('resultBinary', 'retina_mask.png'), 200);
+    setTimeout(() => downloadImage('resultOverlay', 'retina_overlay.png'), 400);
+    setTimeout(() => downloadImage('resultProbability', 'retina_heatmap.png'), 600);
 }
 
 // Global instances
