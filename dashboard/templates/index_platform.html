@@ -23,36 +23,17 @@
         </div>
 
         <nav class="sidebar-nav">
-            <a href="#" class="nav-item active" data-page="home">
-                <svg class="nav-icon" width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
-                    <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"/>
-                </svg>
-                <span>Home</span>
-            </a>
-            <a href="#" class="nav-item" data-page="dashboard">
+            <a href="#" class="nav-item active" data-page="dashboard">
                 <svg class="nav-icon" width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
                     <path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z"/>
                 </svg>
                 <span>Dashboard</span>
             </a>
-            <a href="#" class="nav-item" data-page="history">
+            <a href="/" class="nav-item">
                 <svg class="nav-icon" width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
-                    <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"/>
-                    <path fill-rule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z"/>
+                    <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"/>
                 </svg>
-                <span>History</span>
-            </a>
-            <a href="#" class="nav-item" data-page="about">
-                <svg class="nav-icon" width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
-                    <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"/>
-                </svg>
-                <span>About</span>
-            </a>
-            <a href="#" class="nav-item" data-page="settings">
-                <svg class="nav-icon" width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
-                    <path fill-rule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z"/>
-                </svg>
-                <span>Settings</span>
+                <span>Back to Home</span>
             </a>
         </nav>
 
@@ -79,140 +60,11 @@
 
     <!-- Main Content -->
     <main class="main-content">
-        <!-- Home Page -->
-        <div id="page-home" class="page active">
-            <!-- Compact Hero Section -->
-            <section class="hero-compact">
-                <h1 class="hero-compact-title">AI-Powered Retinal Vessel Analysis</h1>
-                <p class="hero-compact-subtitle">Automated blood vessel segmentation with 83.82% accuracy in under 1 second</p>
-                <div class="hero-compact-actions">
-                    <button class="btn btn-primary" onclick="navigateTo('dashboard')">Start Analysis →</button>
-                    <button class="btn btn-secondary" onclick="navigateTo('about')">Learn More</button>
-                </div>
-            </section>
-
-            <!-- Stats Row (4 Cards) -->
-            <section class="stats-row">
-                <div class="stat-card-mini">
-                    <div class="stat-card-value">1,247</div>
-                    <div class="stat-card-label">Total Analyses</div>
-                </div>
-                <div class="stat-card-mini">
-                    <div class="stat-card-value">83.82%</div>
-                    <div class="stat-card-label">Dice Accuracy</div>
-                </div>
-                <div class="stat-card-mini">
-                    <div class="stat-card-value">&lt;1s</div>
-                    <div class="stat-card-label">Processing Time</div>
-                </div>
-                <div class="stat-card-mini">
-                    <div class="stat-card-value">96.08%</div>
-                    <div class="stat-card-label">Overall Accuracy</div>
-                </div>
-            </section>
-
-            <!-- How It Works (Horizontal) -->
-            <section class="how-it-works-compact">
-                <h2 class="section-title-compact">How It Works</h2>
-                <div class="workflow-horizontal">
-                    <div class="workflow-step-compact">
-                        <div class="step-icon-compact">
-                            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/>
-                            </svg>
-                        </div>
-                        <div class="step-title-compact">Upload Image</div>
-                        <div class="step-desc-compact">PNG, JPG, TIFF</div>
-                    </div>
-                    <div class="workflow-arrow-compact">→</div>
-                    <div class="workflow-step-compact">
-                        <div class="step-icon-compact">
-                            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <circle cx="12" cy="12" r="3"/>
-                                <path d="M12 1v6m0 6v6m-6-6h6m6 0h-6"/>
-                            </svg>
-                        </div>
-                        <div class="step-title-compact">AI Processing</div>
-                        <div class="step-desc-compact">U-Net++ 96%</div>
-                    </div>
-                    <div class="workflow-arrow-compact">→</div>
-                    <div class="workflow-step-compact">
-                        <div class="step-icon-compact">
-                            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M18 20V10M12 20V4M6 20v-6"/>
-                            </svg>
-                        </div>
-                        <div class="step-title-compact">Get Results</div>
-                        <div class="step-desc-compact">4 visualizations</div>
-                    </div>
-                    <div class="workflow-arrow-compact">→</div>
-                    <div class="workflow-step-compact">
-                        <div class="step-icon-compact">
-                            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/>
-                            </svg>
-                        </div>
-                        <div class="step-title-compact">Export</div>
-                        <div class="step-desc-compact">Save & share</div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Clinical Applications (4 Cards Row) -->
-            <section class="clinical-apps-compact">
-                <h2 class="section-title-compact">Clinical Applications</h2>
-                <div class="apps-grid-compact">
-                    <div class="app-card-compact">
-                        <div class="app-icon-compact">
-                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
-                            </svg>
-                        </div>
-                        <h3 class="app-title-compact">Diabetic Retinopathy</h3>
-                        <p class="app-desc-compact">Early microvascular detection</p>
-                    </div>
-                    <div class="app-card-compact">
-                        <div class="app-icon-compact">
-                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <circle cx="12" cy="12" r="10"/>
-                                <path d="M12 6v6l4 2"/>
-                            </svg>
-                        </div>
-                        <h3 class="app-title-compact">Hypertensive Retinopathy</h3>
-                        <p class="app-desc-compact">Monitor arterial changes</p>
-                    </div>
-                    <div class="app-card-compact">
-                        <div class="app-icon-compact">
-                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
-                                <circle cx="12" cy="12" r="3"/>
-                            </svg>
-                        </div>
-                        <h3 class="app-title-compact">Glaucoma Assessment</h3>
-                        <p class="app-desc-compact">Optic nerve analysis</p>
-                    </div>
-                    <div class="app-card-compact">
-                        <div class="app-icon-compact">
-                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-                                <polyline points="14 2 14 8 20 8"/>
-                                <line x1="16" y1="13" x2="8" y2="13"/>
-                                <line x1="16" y1="17" x2="8" y2="17"/>
-                                <polyline points="10 9 9 9 8 9"/>
-                            </svg>
-                        </div>
-                        <h3 class="app-title-compact">Research & Studies</h3>
-                        <p class="app-desc-compact">Clinical data analysis</p>
-                    </div>
-                </div>
-            </section>
-        </div>
-
         <!-- Dashboard Page -->
-        <div id="page-dashboard" class="page">
+        <div id="page-dashboard" class="page active">
             <div class="page-header">
                 <h1 class="page-title">Analysis Dashboard</h1>
-                <p class="page-subtitle">Upload retinal images for AI-powered vessel segmentation</p>
+                <p class="page-subtitle">Upload retinal fundus images for AI-powered blood vessel segmentation analysis</p>
             </div>
 
             <!-- Performance Metrics (Compact) -->
@@ -284,11 +136,17 @@
                     <div class="card upload-card">
                         <h2 class="card-title">Upload Retinal Image</h2>
                         <div class="upload-zone" id="uploadZone">
-                            <svg class="upload-icon" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <svg class="upload-icon" width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/>
                             </svg>
                             <p class="upload-text">Drag & drop retinal image here</p>
-                            <p class="upload-subtext">or click to browse</p>
+                            <p class="upload-subtext">or click to browse your files</p>
+                            <div class="upload-formats">
+                                <span class="format-badge">PNG</span>
+                                <span class="format-badge">JPG</span>
+                                <span class="format-badge">JPEG</span>
+                                <span class="format-badge">TIFF</span>
+                            </div>
                             <input type="file" id="imageInput" accept="image/*" hidden>
                         </div>
                         <div id="loadingIndicator" class="loading-indicator" style="display: none;">
@@ -365,7 +223,17 @@
                         </div>
                         <div class="modal-actions">
                             <button class="btn btn-secondary" onclick="downloadResults()">Download Results</button>
-                            <button class="btn btn-primary" onclick="saveToHistory()">Save to History</button>
+                                                        <button class="btn btn-primary" onclick="saveToHistory()">Save to History</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="/static/script_platform.js"></script>
+</body>
+</html>
                         </div>
                     </div>
                 </div>

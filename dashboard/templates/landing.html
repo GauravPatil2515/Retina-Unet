@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RetinaAI - Medical Vessel Segmentation Platform</title>
+    <link rel="stylesheet" href="/static/style_landing.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header Section -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <div class="logo-icon">
+                        <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+                            <circle cx="16" cy="16" r="14" stroke="currentColor" stroke-width="2"/>
+                            <path d="M12 16 C12 16, 14 12, 16 12 S20 16, 20 16 S18 20, 16 20 S12 16, 12 16" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                            <circle cx="16" cy="16" r="2" fill="currentColor"/>
+                        </svg>
+                    </div>
+                    <div class="logo-text">
+                        <span class="logo-title">RetinaAI</span>
+                        <span class="logo-subtitle">Medical Imaging</span>
+                    </div>
+                </div>
+                <nav class="nav">
+                    <a href="#home" class="nav-link active">Home</a>
+                    <a href="#features" class="nav-link">Features</a>
+                    <a href="#about" class="nav-link">About</a>
+                    <a href="#contact" class="nav-link">Contact</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-badge">
+                    <div class="pulse-dot"></div>
+                    <span>AI-Powered Retinal Vessel Analysis</span>
+                </div>
+                <h1 class="hero-title">
+                    Welcome to <span class="hero-highlight">RetinaAI</span>
+                </h1>
+                <p class="hero-subtitle">
+                    Get instant, accurate blood vessel segmentation from retinal fundus images powered by advanced U-Net++ deep learning architecture. Achieve 83.82% Dice accuracy in under 1 second.
+                </p>
+                <div class="cta-buttons">
+                    <a href="/dashboard" class="btn btn-primary">
+                        <span>Open Dashboard</span>
+                        <svg class="btn-icon" width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"/>
+                        </svg>
+                    </a>
+                    <a href="#about" class="btn btn-secondary">
+                        <span>Learn More</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="container">
+            <h2 class="section-title">Advanced Capabilities</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                            <polyline points="17 8 12 3 7 8"/>
+                            <line x1="12" y1="3" x2="12" y2="15"/>
+                        </svg>
+                    </div>
+                    <h3 class="feature-title">Upload & Process</h3>
+                    <p class="feature-desc">Simply upload retinal images in PNG, JPG, or TIFF format for instant analysis</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+                        </svg>
+                    </div>
+                    <h3 class="feature-title">High Accuracy</h3>
+                    <p class="feature-desc">U-Net++ architecture achieving state-of-the-art 83.82% Dice coefficient on DRIVE dataset</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="3"/>
+                            <path d="M12 1v6m0 6v6"/>
+                        </svg>
+                    </div>
+                    <h3 class="feature-title">GPU Accelerated</h3>
+                    <p class="feature-desc">CUDA-optimized inference for real-time processing under 1 second per image</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="3" y="3" width="7" height="7"/>
+                            <rect x="14" y="3" width="7" height="7"/>
+                            <rect x="14" y="14" width="7" height="7"/>
+                            <rect x="3" y="14" width="7" height="7"/>
+                        </svg>
+                    </div>
+                    <h3 class="feature-title">Multiple Outputs</h3>
+                    <p class="feature-desc">4 visualization modes: original, probability map, binary mask, and overlay</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+                            <path d="M2 17l10 5 10-5M2 12l10 5 10-5"/>
+                        </svg>
+                    </div>
+                    <h3 class="feature-title">Deep Learning</h3>
+                    <p class="feature-desc">Powered by PyTorch 2.0+ with nested skip connections and deep supervision</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                            <polyline points="7 10 12 15 17 10"/>
+                            <line x1="12" y1="15" x2="12" y2="3"/>
+                        </svg>
+                    </div>
+                    <h3 class="feature-title">Export Results</h3>
+                    <p class="feature-desc">Download all visualizations with comprehensive metrics and statistics</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Clinical Applications Section -->
+    <section class="clinical">
+        <div class="container">
+            <h2 class="section-title">Clinical Applications</h2>
+            <div class="clinical-grid">
+                <div class="clinical-card">
+                    <div class="clinical-icon">
+                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+                        </svg>
+                    </div>
+                    <h3 class="clinical-title">Diabetic Retinopathy</h3>
+                    <p class="clinical-desc">Early detection of microvascular changes and vessel abnormalities</p>
+                </div>
+                <div class="clinical-card">
+                    <div class="clinical-icon">
+                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"/>
+                            <polyline points="12 6 12 12 16 14"/>
+                        </svg>
+                    </div>
+                    <h3 class="clinical-title">Hypertensive Retinopathy</h3>
+                    <p class="clinical-desc">Monitor arterial narrowing and vascular pattern changes</p>
+                </div>
+                <div class="clinical-card">
+                    <div class="clinical-icon">
+                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                            <circle cx="12" cy="12" r="3"/>
+                        </svg>
+                    </div>
+                    <h3 class="clinical-title">Retinal Disease Analysis</h3>
+                    <p class="clinical-desc">Comprehensive vessel mapping for ophthalmological assessment</p>
+                </div>
+                <div class="clinical-card">
+                    <div class="clinical-icon">
+                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                            <polyline points="14 2 14 8 20 8"/>
+                            <line x1="16" y1="13" x2="8" y2="13"/>
+                            <line x1="16" y1="17" x2="8" y2="17"/>
+                        </svg>
+                    </div>
+                    <h3 class="clinical-title">Research & Studies</h3>
+                    <p class="clinical-desc">Automated quantitative analysis for clinical research</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about" id="about">
+        <div class="container">
+            <div class="about-content">
+                <h2 class="section-title">About the Technology</h2>
+                <div class="about-text">
+                    <p>RetinaAI uses the state-of-the-art U-Net++ (Nested U-Net) architecture for medical image segmentation. This advanced deep learning model features nested skip connections and deep supervision, achieving exceptional performance on retinal vessel segmentation tasks.</p>
+                    <p>Trained on the DRIVE dataset with 20 high-resolution fundus images, our model achieves 96.08% pixel accuracy and 83.82% Dice coefficient, making it suitable for clinical applications in diabetic retinopathy screening, retinal disease diagnosis, and automated ophthalmological analysis.</p>
+                </div>
+                <div class="about-metrics">
+                    <div class="metric-item">
+                        <div class="metric-value">82.91%</div>
+                        <div class="metric-label">Sensitivity</div>
+                    </div>
+                    <div class="metric-item">
+                        <div class="metric-value">97.97%</div>
+                        <div class="metric-label">Specificity</div>
+                    </div>
+                    <div class="metric-item">
+                        <div class="metric-value">97.82%</div>
+                        <div class="metric-label">AUC-ROC</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-text">
+                    Built with ❤️ by <strong>Gaurav Patil</strong> • B.Tech Computer Engineering
+                </div>
+                <div class="footer-links">
+                    <a href="https://github.com/GauravPatil2515/Retina-Unet" target="_blank" class="footer-link">GitHub</a>
+                    <span class="footer-divider">•</span>
+                    <a href="#" class="footer-link">Documentation</a>
+                </div>
+                <div class="footer-copyright">
+                    © 2025 RetinaAI • Advanced Medical Image Segmentation
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="/static/script_landing.js"></script>
+</body>
+</html>

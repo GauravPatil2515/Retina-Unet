@@ -93,6 +93,13 @@ async def startup_event():
 
 @app.get("/", response_class=HTMLResponse)
 async def home(request: Request):
+    """Render landing page"""
+    return templates.TemplateResponse("landing.html", {
+        "request": request
+    })
+
+@app.get("/dashboard", response_class=HTMLResponse)
+async def dashboard(request: Request):
     """Render main dashboard"""
     # Load metrics
     metrics = load_metrics()
@@ -120,9 +127,9 @@ async def segment_image(file: UploadFile = File(...)):
         image = Image.open(io.BytesIO(contents)).convert('RGB')
         original_size = image.size
         
-        # BASIC PREPROCESSING: Resize to standard size (multiple of 32 for U-Net++)
-        # Model was trained on 128x128 patches, so use 512x512 (divisible by 32)
-        target_size = (512, 512)  # Works perfectly with U-Net++ architecture
+        # BASIC PREPROCESSING: Resize to model input size (128x128 for U-Net++)
+        # Model was trained on 128x128 patches
+        target_size = (128, 128)  # Model input size
         image_resized = image.resize(target_size, Image.BICUBIC)
         
         # Preprocess
