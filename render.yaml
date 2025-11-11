@@ -2,10 +2,15 @@ services:
   - type: web
     name: retina-unet
     runtime: python
-    buildCommand: pip install -r requirements.txt
+    plan: free
+    buildCommand: pip install --upgrade pip && pip install --no-cache-dir -r requirements.txt
     startCommand: uvicorn dashboard.app:app --host 0.0.0.0 --port $PORT
     envVars:
       - key: PYTHON_VERSION
         value: 3.11.4
       - key: PORT
         generateValue: true
+      - key: PIP_DEFAULT_TIMEOUT
+        value: 100
+      - key: PIP_RETRIES
+        value: 5
