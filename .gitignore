@@ -170,8 +170,11 @@ datasets/
 *.zip
 *.tar.gz
 
-# Model checkpoints (too large for GitHub)
-results/checkpoints_unetpp/*.pth
+# Model checkpoints (using Git LFS for deployment)
+# NOTE: best.pth is tracked with Git LFS for deployment
+# To enable: git lfs track "results/checkpoints_unetpp/best.pth"
+results/checkpoints_unetpp/latest.pth
+!results/checkpoints_unetpp/best.pth
 !results/checkpoints_unetpp/metrics.json
 
 # Visualizations (optional - can be regenerated)

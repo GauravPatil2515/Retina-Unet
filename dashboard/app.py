@@ -48,10 +48,21 @@ def load_model():
         model = UNetPlusPlus(in_channels=3, out_channels=1, deep_supervision=True).to(device)
         print("Model architecture created")
         
-        checkpoint_path = Path(__file__).parent.parent / 'results' / 'checkpoints_unetpp' / 'best.pth'
-        print(f"Loading checkpoint from: {checkpoint_path}")
+        # Try multiple checkpoint paths (for different deployment environments)
+        checkpoint_paths = [
+            Path(__file__).parent.parent / 'results' / 'checkpoints_unetpp' / 'best.pth',
+            Path('/opt/render/project/src/results/checkpoints_unetpp/best.pth'),  # Render path
+            Path('./results/checkpoints_unetpp/best.pth'),  # Relative path
+        ]
         
-        if checkpoint_path.exists():
+        checkpoint_path = None
+        for path in checkpoint_paths:
+            if path.exists():
+                checkpoint_path = path
+                break
+        
+        if checkpoint_path:
+            print(f"Loading checkpoint from: {checkpoint_path}")
             checkpoint = torch.load(str(checkpoint_path), map_location=device, weights_only=False)
             model.load_state_dict(checkpoint['model_state_dict'])
             model.eval()
@@ -62,12 +73,17 @@ def load_model():
                 'dice': checkpoint.get('metrics', {}).get('dice', 0.0),
                 'loaded': True
             }
+            return True
         else:
-            print(f"Checkpoint not found at {checkpoint_path}")
-            checkpoint_info = {'loaded': False, 'error': 'Model not found'}
+            print("WARNING: No checkpoint found. Model will run with random weights.")
+            print("For production, upload your trained model checkpoint.")
+            checkpoint_info = {
+                'loaded': False, 
+                'error': 'Checkpoint not found - using untrained model',
+                'warning': 'Please upload trained model for accurate predictions'
+            }
+            model.eval()  # Still set to eval mode
             return False
-        
-        return checkpoint_info['loaded']
         
     except Exception as e:
         print(f"Error loading model: {e}")
@@ -118,9 +134,17 @@ async def segment_image(file: UploadFile = File(...)):
         # Check if model is loaded
         if model is None:
             return JSONResponse(
-                content={'success': False, 'error': 'Model not loaded. Please check server logs.'},
+                content={
+                    'success': False, 
+                    'error': 'Model not initialized. Please check server logs.',
+                    'details': 'The model architecture could not be created.'
+                },
                 status_code=500
             )
+        
+        # Warn if checkpoint not loaded
+        if not checkpoint_info.get('loaded', False):
+            print("WARNING: Processing with untrained model - predictions will be random!")
         
         # Read image
         contents = await file.read()
