@@ -10,7 +10,7 @@ import sys
 from pathlib import Path
 
 # Model information
-MODEL_URL = "YOUR_GOOGLE_DRIVE_DIRECT_LINK_HERE"  # Replace with actual link
+MODEL_URL = "https://drive.google.com/uc?export=download&id=1rRLJe9J0XCwHgq8SR91fMNzTqjxiacHA"  # Google Drive direct download
 MODEL_PATH = "results/checkpoints_unetpp/best.pth"
 EXPECTED_SIZE_MB = 104
 
