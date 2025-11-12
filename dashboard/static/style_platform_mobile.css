@@ -748,12 +748,12 @@ body {
 .features-grid-info {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 20px;
-    margin-top: 20px;
+    gap: 16px;
+    margin-top: 0;
 }
 
 .feature-card-info {
-    padding: 24px;
+    padding: 20px;
     background: var(--card-bg);
     border-radius: 12px;
     border: 1px solid var(--border-color);
@@ -761,46 +761,51 @@ body {
 }
 
 .feature-card-info:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
     border-color: var(--primary-color);
 }
 
 .feature-icon-info {
-    width: 56px;
-    height: 56px;
+    width: 48px;
+    height: 48px;
     background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
-    border-radius: 12px;
+    border-radius: 10px;
     display: flex;
     align-items: center;
     justify-content: center;
     color: white;
-    margin-bottom: 16px;
+    margin-bottom: 12px;
+}
+
+.feature-icon-info svg {
+    width: 24px;
+    height: 24px;
 }
 
 .feature-title-info {
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 600;
     color: var(--text-primary);
-    margin-bottom: 8px;
+    margin-bottom: 6px;
 }
 
 .feature-desc-info {
-    font-size: 14px;
+    font-size: 13px;
     color: var(--text-secondary);
-    line-height: 1.6;
+    line-height: 1.5;
 }
 
 /* Clinical Applications Grid */
 .clinical-grid-info {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 20px;
-    margin-top: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 16px;
+    margin-top: 0;
 }
 
 .clinical-card-info {
-    padding: 24px;
+    padding: 20px;
     background: var(--card-bg);
     border-radius: 12px;
     border: 1px solid var(--border-color);
@@ -809,121 +814,175 @@ body {
 }
 
 .clinical-card-info:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
     border-color: var(--primary-color);
 }
 
 .clinical-icon-info {
-    width: 80px;
-    height: 80px;
+    width: 64px;
+    height: 64px;
     background: linear-gradient(135deg, rgba(194, 24, 91, 0.1), rgba(220, 20, 73, 0.1));
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     color: var(--primary-color);
-    margin: 0 auto 16px;
+    margin: 0 auto 12px;
+}
+
+.clinical-icon-info svg {
+    width: 32px;
+    height: 32px;
 }
 
 .clinical-title-info {
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 600;
     color: var(--text-primary);
-    margin-bottom: 8px;
+    margin-bottom: 6px;
 }
 
 .clinical-desc-info {
-    font-size: 14px;
+    font-size: 13px;
     color: var(--text-secondary);
-    line-height: 1.6;
+    line-height: 1.5;
 }
 
 /* About Content */
 .about-content-info {
-    padding: 20px 0;
+    padding: 0;
 }
 
 .about-text-info {
-    font-size: 15px;
-    line-height: 1.8;
+    font-size: 14px;
+    line-height: 1.7;
     color: var(--text-secondary);
-    margin-bottom: 16px;
+    margin-bottom: 12px;
 }
 
 .metrics-grid-info {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    gap: 20px;
-    margin-top: 32px;
-    padding: 24px;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 16px;
+    margin-top: 20px;
+    padding: 20px;
     background: linear-gradient(135deg, rgba(194, 24, 91, 0.05), rgba(220, 20, 73, 0.05));
     border-radius: 12px;
 }
 
 .metric-item-info {
     text-align: center;
-    padding: 16px;
+    padding: 12px;
 }
 
 .metric-value-info {
-    font-size: 36px;
+    font-size: 32px;
     font-weight: 700;
     color: var(--primary-color);
-    margin-bottom: 8px;
+    margin-bottom: 6px;
 }
 
 .metric-label-info {
-    font-size: 14px;
+    font-size: 13px;
     color: var(--text-secondary);
     font-weight: 500;
+}
+
+/* Card spacing adjustments for info page */
+#page-info .card {
+    margin-bottom: 16px;
+}
+
+#page-info .card:last-child {
+    margin-bottom: 0;
+}
+
+#page-info .card-title {
+    font-size: 18px;
+    margin-bottom: 16px;
+    padding-bottom: 10px;
 }
 
 /* Responsive adjustments for info page */
 @media (max-width: 768px) {
     .features-grid-info {
-        grid-template-columns: 1fr;
-        gap: 16px;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
     }
     
     .clinical-grid-info {
-        grid-template-columns: 1fr;
-        gap: 16px;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
     }
     
     .metrics-grid-info {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(3, 1fr);
         gap: 12px;
+        padding: 16px;
     }
     
     .feature-card-info,
     .clinical-card-info {
-        padding: 20px;
+        padding: 16px;
+    }
+    
+    .metric-value-info {
+        font-size: 24px;
+    }
+    
+    .feature-icon-info {
+        width: 40px;
+        height: 40px;
+    }
+    
+    .clinical-icon-info {
+        width: 56px;
+        height: 56px;
+    }
+}
+
+@media (max-width: 480px) {
+    .features-grid-info {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+    
+    .clinical-grid-info {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+    
+    .metrics-grid-info {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+    
+    .feature-icon-info {
+        width: 36px;
+        height: 36px;
+    }
+    
+    .clinical-icon-info {
+        width: 48px;
+        height: 48px;
+    }
+    
+    .feature-title-info,
+    .clinical-title-info {
+        font-size: 15px;
+    }
+    
+    .feature-desc-info,
+    .clinical-desc-info {
+        font-size: 12px;
     }
     
     .metric-value-info {
         font-size: 28px;
     }
-}
-
-@media (max-width: 480px) {
-    .feature-icon-info {
-        width: 48px;
-        height: 48px;
-    }
     
-    .clinical-icon-info {
-        width: 64px;
-        height: 64px;
-    }
-    
-    .feature-title-info,
-    .clinical-title-info {
-        font-size: 16px;
-    }
-    
-    .feature-desc-info,
-    .clinical-desc-info {
-        font-size: 13px;
+    #page-info .card {
+        margin-bottom: 12px;
     }
 }
