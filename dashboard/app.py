@@ -106,27 +106,75 @@ def load_model():
         
         if checkpoint_path:
             print(f"Loading checkpoint from: {checkpoint_path}")
+            print(f"Checkpoint exists: {checkpoint_path.exists()}")
+            print(f"Checkpoint size: {checkpoint_path.stat().st_size / (1024*1024):.2f} MB")
+            
+            # Check if it's a Git LFS pointer file (not the actual binary model)
+            file_size_mb = checkpoint_path.stat().st_size / (1024*1024)
+            if file_size_mb < 1:  # LFS pointer files are tiny (<1 MB)
+                with open(checkpoint_path, 'rb') as f:
+                    first_bytes = f.read(100)
+                    if b'version https://git-lfs.github.com' in first_bytes or b'oid sha256' in first_bytes:
+                        print("=" * 60)
+                        print("✗✗✗ CRITICAL: Git LFS POINTER DETECTED! ✗✗✗")
+                        print("=" * 60)
+                        print("The file is a Git LFS pointer, NOT the actual 104MB model!")
+                        print("Render.com free tier doesn't download Git LFS files properly.")
+                        print("")
+                        print("SOLUTION:")
+                        print("1. Upload best.pth to Google Drive (get direct link)")
+                        print("2. Update MODEL_URL in download_model.py")
+                        print("3. Redeploy on Render")
+                        print("=" * 60)
+                        checkpoint_info = {
+                            'loaded': False,
+                            'error': 'Git LFS pointer found - actual model not downloaded',
+                            'warning': 'Use cloud storage (Google Drive) for model hosting'
+                        }
+                        return False
+            
             checkpoint = torch.load(
                 str(checkpoint_path), 
                 map_location=device, 
                 weights_only=False
             )
+            
+            # Verify checkpoint structure
+            if 'model_state_dict' not in checkpoint:
+                print("ERROR: Invalid checkpoint format - missing 'model_state_dict'")
+                raise ValueError("Invalid checkpoint format")
+            
             model.load_state_dict(checkpoint['model_state_dict'])
-            print("Checkpoint loaded successfully")
+            print("✓ Checkpoint loaded successfully!")
+            
+            # Extract and display metrics
+            dice_score = checkpoint.get('metrics', {}).get('dice', 0.0)
+            epoch = checkpoint.get('epoch', 'N/A')
             
             checkpoint_info = {
-                'epoch': checkpoint.get('epoch', 'N/A'),
-                'dice': checkpoint.get('metrics', {}).get('dice', 0.0),
+                'epoch': epoch,
+                'dice': dice_score,
                 'loaded': True
             }
+            
+            print(f"✓ Model ready: Epoch {epoch}, Dice Score: {dice_score:.4f}")
             return True
         else:
-            print("WARNING: No checkpoint found. Model will run with random weights.")
-            print("For production, upload your trained model checkpoint.")
+            print("=" * 60)
+            print("✗✗✗ CRITICAL ERROR: NO CHECKPOINT FOUND ✗✗✗")
+            print("=" * 60)
+            print("Searched paths:")
+            for p in checkpoint_paths:
+                print(f"  - {p} (exists: {p.exists()})")
+            print("=" * 60)
+            print("⚠ Model will use RANDOM WEIGHTS - predictions will be WRONG!")
+            print("⚠ This is likely a Git LFS issue on Render.com")
+            print("=" * 60)
+            
             checkpoint_info = {
                 'loaded': False, 
-                'error': 'Checkpoint not found - using untrained model',
-                'warning': 'Please upload trained model for accurate predictions'
+                'error': 'CHECKPOINT NOT FOUND - Using random weights',
+                'warning': 'Git LFS may not be working on Render. Check deployment logs.'
             }
             return False
         
