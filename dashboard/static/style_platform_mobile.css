@@ -281,13 +281,7 @@ body {
     color: var(--primary-color);
 }
 
-/* Main Content */
-.main-content {
-    margin-left: var(--sidebar-width);
-    min-height: 100vh;
-    padding: 24px;
-}
-
+/* Page Header */
 .page-header {
     margin-bottom: 24px;
 }
@@ -543,9 +537,9 @@ body {
    MOBILE RESPONSIVE
    ==================== */
 
-@media (max-width: 1024px) {
+@media (max-width: 768px) {
     .metrics-grid-compact {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: 1fr;
     }
     
     .results-grid {
