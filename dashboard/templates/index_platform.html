@@ -50,6 +50,12 @@
                 </svg>
                 <span>Dashboard</span>
             </a>
+            <a href="#" class="nav-item" data-page="info">
+                <svg class="nav-icon" width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"/>
+                </svg>
+                <span>Information</span>
+            </a>
             <a href="/" class="nav-item">
                 <svg class="nav-icon" width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
                     <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"/>
@@ -255,6 +261,163 @@
     <script src="/static/script_platform.js"></script>
 </body>
 </html>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Information Page -->
+        <div id="page-info" class="page">
+            <div class="page-header">
+                <h1 class="page-title">Platform Information</h1>
+                <p class="page-subtitle">Learn about RetinaAI's capabilities and technology</p>
+            </div>
+
+            <!-- Features Section -->
+            <div class="card">
+                <h2 class="card-title">Advanced Capabilities</h2>
+                <div class="features-grid-info">
+                    <div class="feature-card-info">
+                        <div class="feature-icon-info">
+                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                                <polyline points="17 8 12 3 7 8"/>
+                                <line x1="12" y1="3" x2="12" y2="15"/>
+                            </svg>
+                        </div>
+                        <h3 class="feature-title-info">Upload & Process</h3>
+                        <p class="feature-desc-info">Simply upload retinal images in PNG, JPG, or TIFF format for instant analysis</p>
+                    </div>
+                    <div class="feature-card-info">
+                        <div class="feature-icon-info">
+                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+                            </svg>
+                        </div>
+                        <h3 class="feature-title-info">High Accuracy</h3>
+                        <p class="feature-desc-info">U-Net++ architecture achieving state-of-the-art 83.82% Dice coefficient on DRIVE dataset</p>
+                    </div>
+                    <div class="feature-card-info">
+                        <div class="feature-icon-info">
+                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="3"/>
+                                <path d="M12 1v6m0 6v6"/>
+                            </svg>
+                        </div>
+                        <h3 class="feature-title-info">GPU Accelerated</h3>
+                        <p class="feature-desc-info">CUDA-optimized inference for real-time processing under 1 second per image</p>
+                    </div>
+                    <div class="feature-card-info">
+                        <div class="feature-icon-info">
+                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="3" y="3" width="7" height="7"/>
+                                <rect x="14" y="3" width="7" height="7"/>
+                                <rect x="14" y="14" width="7" height="7"/>
+                                <rect x="3" y="14" width="7" height="7"/>
+                            </svg>
+                        </div>
+                        <h3 class="feature-title-info">Multiple Outputs</h3>
+                        <p class="feature-desc-info">4 visualization modes: original, probability map, binary mask, and overlay</p>
+                    </div>
+                    <div class="feature-card-info">
+                        <div class="feature-icon-info">
+                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+                                <path d="M2 17l10 5 10-5M2 12l10 5 10-5"/>
+                            </svg>
+                        </div>
+                        <h3 class="feature-title-info">Deep Learning</h3>
+                        <p class="feature-desc-info">Powered by PyTorch 2.0+ with nested skip connections and deep supervision</p>
+                    </div>
+                    <div class="feature-card-info">
+                        <div class="feature-icon-info">
+                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                                <polyline points="7 10 12 15 17 10"/>
+                                <line x1="12" y1="15" x2="12" y2="3"/>
+                            </svg>
+                        </div>
+                        <h3 class="feature-title-info">Export Results</h3>
+                        <p class="feature-desc-info">Download all visualizations with comprehensive metrics and statistics</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Clinical Applications -->
+            <div class="card" style="margin-top: 2rem;">
+                <h2 class="card-title">Clinical Applications</h2>
+                <div class="clinical-grid-info">
+                    <div class="clinical-card-info">
+                        <div class="clinical-icon-info">
+                            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+                            </svg>
+                        </div>
+                        <h3 class="clinical-title-info">Diabetic Retinopathy</h3>
+                        <p class="clinical-desc-info">Early detection of microvascular changes and vessel abnormalities</p>
+                    </div>
+                    <div class="clinical-card-info">
+                        <div class="clinical-icon-info">
+                            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"/>
+                                <polyline points="12 6 12 12 16 14"/>
+                            </svg>
+                        </div>
+                        <h3 class="clinical-title-info">Hypertensive Retinopathy</h3>
+                        <p class="clinical-desc-info">Monitor arterial narrowing and vascular pattern changes</p>
+                    </div>
+                    <div class="clinical-card-info">
+                        <div class="clinical-icon-info">
+                            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                                <circle cx="12" cy="12" r="3"/>
+                            </svg>
+                        </div>
+                        <h3 class="clinical-title-info">Retinal Disease Analysis</h3>
+                        <p class="clinical-desc-info">Comprehensive vessel mapping for ophthalmological assessment</p>
+                    </div>
+                    <div class="clinical-card-info">
+                        <div class="clinical-icon-info">
+                            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                                <polyline points="14 2 14 8 20 8"/>
+                                <line x1="16" y1="13" x2="8" y2="13"/>
+                                <line x1="16" y1="17" x2="8" y2="17"/>
+                            </svg>
+                        </div>
+                        <h3 class="clinical-title-info">Research & Studies</h3>
+                        <p class="clinical-desc-info">Automated quantitative analysis for clinical research</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Technology Information -->
+            <div class="card" style="margin-top: 2rem;">
+                <h2 class="card-title">About the Technology</h2>
+                <div class="about-content-info">
+                    <p class="about-text-info">
+                        RetinaAI uses the state-of-the-art U-Net++ (Nested U-Net) architecture for medical image segmentation. 
+                        This advanced deep learning model features nested skip connections and deep supervision, achieving 
+                        exceptional performance on retinal vessel segmentation tasks.
+                    </p>
+                    <p class="about-text-info">
+                        Trained on the DRIVE dataset with 20 high-resolution fundus images, our model achieves 96.08% pixel 
+                        accuracy and 83.82% Dice coefficient, making it suitable for clinical applications in diabetic 
+                        retinopathy screening, retinal disease diagnosis, and automated ophthalmological analysis.
+                    </p>
+                    <div class="metrics-grid-info">
+                        <div class="metric-item-info">
+                            <div class="metric-value-info">82.91%</div>
+                            <div class="metric-label-info">Sensitivity</div>
+                        </div>
+                        <div class="metric-item-info">
+                            <div class="metric-value-info">97.97%</div>
+                            <div class="metric-label-info">Specificity</div>
+                        </div>
+                        <div class="metric-item-info">
+                            <div class="metric-value-info">97.25%</div>
+                            <div class="metric-label-info">AUC-ROC</div>
                         </div>
                     </div>
                 </div>
