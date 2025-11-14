@@ -3,7 +3,7 @@
 // Navigation System
 class NavigationController {
     constructor() {
-        this.currentPage = 'home';
+        this.currentPage = 'dashboard'; // Start with dashboard page
         this.init();
     }
 
@@ -272,21 +272,21 @@ class ImageUploader {
     }
 
     updateHistoryTable() {
-        const tbody = document.querySelector('#history-table tbody');
+        const tbody = document.querySelector('#historyTableBody');
         if (!tbody) return;
 
         if (this.recentUploads.length === 0) {
-            tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;padding:48px;color:#999;">No uploads yet</td></tr>';
+            tbody.innerHTML = '<tr><td colspan="7" class="empty-state">No analysis history available</td></tr>';
             return;
         }
 
         tbody.innerHTML = this.recentUploads.map((upload, index) => `
             <tr>
-                <td>${this.recentUploads.length - index}</td>
                 <td><img src="${upload.originalImage}" class="history-thumbnail" alt="${upload.name}"></td>
                 <td>${this.formatDateTime(upload.date)}</td>
                 <td>${this.truncateName(upload.name, 30)}</td>
                 <td>${upload.metrics.dice}%</td>
+                <td>${(upload.metrics.iou || 0).toFixed(2)}%</td>
                 <td><span class="status-badge success">Complete</span></td>
                 <td>
                     <button class="action-button" onclick="imageUploader.viewDetails(${upload.id})">View</button>
@@ -355,7 +355,7 @@ class ModalController {
         }
 
         // Close button
-        document.getElementById('close-modal')?.addEventListener('click', () => {
+        document.getElementById('modal-close')?.addEventListener('click', () => {
             this.close();
         });
 
@@ -388,21 +388,24 @@ class ModalController {
         const resultBinary = document.getElementById('resultBinary');
         const resultOverlay = document.getElementById('resultOverlay');
         
-        if (resultOriginal) resultOriginal.src = result.originalImage || result.original_image;
-        if (resultProbability) resultProbability.src = result.heatmap || result.original_image;
+        if (resultOriginal) resultOriginal.src = result.original_image;
+        if (resultProbability) resultProbability.src = result.heatmap;
         if (resultBinary) resultBinary.src = result.mask;
         if (resultOverlay) resultOverlay.src = result.overlay;
 
         // Set metrics
         const statCoverage = document.getElementById('statCoverage');
         const statConfidence = document.getElementById('statConfidence');
-        const statPixels = document.getElementById('statPixels');
+        const statSize = document.getElementById('statSize');
         
         if (result.vessel_coverage && statCoverage) {
             statCoverage.textContent = `${result.vessel_coverage.toFixed(2)}%`;
         }
         if (result.mean_confidence && statConfidence) {
             statConfidence.textContent = `${(result.mean_confidence * 100).toFixed(2)}%`;
+        }
+        if (result.image_size && statSize) {
+            statSize.textContent = result.image_size;
         }
 
         // Show modal
@@ -417,8 +420,8 @@ class ModalController {
 // Search and Filter Controller
 class SearchController {
     constructor() {
-        this.searchInput = document.getElementById('history-search');
-        this.filterSelect = document.getElementById('history-filter');
+        this.searchInput = document.getElementById('historySearch');
+        this.filterSelect = document.getElementById('historyFilter');
         this.init();
     }
 
@@ -463,11 +466,11 @@ function initializeSparklines() {
         );
     };
 
-    // Create sparklines
-    new SparklineChart('dice-sparkline', generateData(83.82, 2), '#C2185B');
-    new SparklineChart('accuracy-sparkline', generateData(96.08, 1.5), '#4CAF50');
-    new SparklineChart('sensitivity-sparkline', generateData(82.91, 3), '#FF9800');
-    new SparklineChart('specificity-sparkline', generateData(97.97, 1), '#2196F3');
+    // Create sparklines with correct IDs
+    new SparklineChart('sparkline-dice', generateData(83.82, 2), '#C2185B');
+    new SparklineChart('sparkline-accuracy', generateData(96.08, 1.5), '#4CAF50');
+    new SparklineChart('sparkline-sensitivity', generateData(82.91, 3), '#FF9800');
+    new SparklineChart('sparkline-specificity', generateData(97.97, 1), '#2196F3');
 }
 
 // Initialize Progress Bars with Animation
