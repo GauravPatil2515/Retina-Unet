@@ -17,6 +17,7 @@ import io
 import base64
 import sys
 import os
+import time
 from pathlib import Path
 import json
 from datetime import datetime
@@ -42,7 +43,7 @@ async def lifespan(app: FastAPI):
     # Startup
     try:
         print("=" * 60)
-        print("Starting RetinaAI Dashboard...")
+        print("🚀 Starting RetinaAI Dashboard v1.1.0")
         print("=" * 60)
         # Load model in background to not block startup
         await asyncio.to_thread(load_model)
@@ -51,7 +52,7 @@ async def lifespan(app: FastAPI):
         else:
             print(f"⚠ Model loading failed: {checkpoint_info.get('error', 'Unknown error')}")
         print("=" * 60)
-        print("Dashboard ready!")
+        print("🎉 Dashboard ready at http://localhost:8000")
         print("=" * 60)
     except Exception as e:
         print(f"✗ Error during startup: {e}")
@@ -65,8 +66,9 @@ async def lifespan(app: FastAPI):
 
 # Initialize FastAPI with optimizations
 app = FastAPI(
-    title="Retina U-Net Dashboard", 
-    version="1.0.0",
+    title="RetinaAI - Medical Vessel Segmentation Platform",
+    description="Advanced deep learning system for retinal blood vessel segmentation using U-Net++ architecture",
+    version="1.1.0",
     docs_url="/docs",
     redoc_url=None,  # Disable ReDoc for faster startup
     lifespan=lifespan
@@ -251,35 +253,84 @@ async def dashboard(request: Request):
 async def segment_image(file: UploadFile = File(...)):
     """Process uploaded image and return segmentation results - OPTIMIZED"""
     try:
+        # Validate file
+        if not file.filename:
+            return JSONResponse(
+                content={'success': False, 'error': 'No file provided'},
+                status_code=400
+            )
+
+        # Check file type
+        allowed_types = ['image/png', 'image/jpeg', 'image/jpg', 'image/tiff', 'image/tif']
+        if file.content_type not in allowed_types:
+            return JSONResponse(
+                content={'success': False, 'error': f'Unsupported file type: {file.content_type}. Please upload PNG, JPG, or TIFF images.'},
+                status_code=400
+            )
+
+        # Check file size (max 10MB)
+        file_size = 0
+        content_chunks = []
+        async for chunk in file:
+            file_size += len(chunk)
+            content_chunks.append(chunk)
+            if file_size > 10 * 1024 * 1024:  # 10MB limit
+                return JSONResponse(
+                    content={'success': False, 'error': 'File too large. Maximum size is 10MB.'},
+                    status_code=413
+                )
+
+        contents = b''.join(content_chunks)
+
         # Check if model is loaded
         if model is None:
             return JSONResponse(
                 content={
-                    'success': False, 
+                    'success': False,
                     'error': 'Model not initialized. Please check server logs.',
                     'details': 'The model architecture could not be created.'
                 },
                 status_code=500
             )
-        
+
         # Warn if checkpoint not loaded
         if not checkpoint_info.get('loaded', False):
             print("WARNING: Processing with untrained model - predictions will be random!")
-        
+
         # Read image (async I/O)
-        contents = await file.read()
-        image = Image.open(io.BytesIO(contents)).convert('RGB')
+        try:
+            image = Image.open(io.BytesIO(contents)).convert('RGB')
+        except Exception as e:
+            return JSONResponse(
+                content={'success': False, 'error': f'Invalid image file: {str(e)}'},
+                status_code=400
+            )
+
         original_size = image.size
+
+        # Validate image dimensions
+        if original_size[0] < 64 or original_size[1] < 64:
+            return JSONResponse(
+                content={'success': False, 'error': 'Image too small. Minimum size is 64x64 pixels.'},
+                status_code=400
+            )
+
+        if original_size[0] > 4096 or original_size[1] > 4096:
+            return JSONResponse(
+                content={'success': False, 'error': 'Image too large. Maximum size is 4096x4096 pixels.'},
+                status_code=400
+            )
         
         # OPTIMIZED PREPROCESSING: Resize to model input size (512x512 for U-Net++)
         target_size = (512, 512)  # Model trained on 512x512
         image_resized = image.resize(target_size, Image.LANCZOS)
-        
+
         # Preprocess - vectorized operations with proper normalization
         img_array = np.array(image_resized, dtype=np.float32) / 255.0
         img_tensor = torch.from_numpy(img_array).permute(2, 0, 1).unsqueeze(0).to(device)
-        
-        # Predict with optimizations
+
+        # Predict with optimizations and timing
+        start_time = time.time()
         with torch.no_grad(), torch.amp.autocast('cuda' if device.type=='cuda' else 'cpu', enabled=device.type=='cuda'):
             outputs = model(img_tensor)
             if isinstance(outputs, (tuple, list)):
@@ -287,6 +338,9 @@ async def segment_image(file: UploadFile = File(...)):
             else:
                 pred_logits = outputs
             pred_prob = torch.sigmoid(pred_logits)
+
+        inference_time = time.time() - start_time
+        print(".3f")
         
         # Convert to numpy (async to avoid blocking)
         pred_prob_np = pred_prob.squeeze().cpu().numpy()
@@ -347,6 +401,7 @@ async def segment_image(file: UploadFile = File(...)):
             'vessel_coverage': float(vessel_coverage),
             'mean_confidence': float(mean_confidence),
             'image_size': f"{original_size[0]}x{original_size[1]}",
+            'processing_time': round(inference_time, 3),
             'model_info': {
                 'loaded': checkpoint_info.get('loaded', False),
                 'epoch': checkpoint_info.get('epoch', 0),
@@ -397,18 +452,28 @@ async def get_stats():
         'history': history
     })
 
-@app.get("/api/model-info")
-async def get_model_info():
-    """Get detailed model information"""
+@app.get("/health")
+async def health_check():
+    """Health check endpoint for monitoring"""
     return JSONResponse(content={
-        'architecture': 'U-Net++ (Nested U-Net)',
-        'parameters': '9,049,572',
-        'input_size': '3x128x128',
-        'output_channels': 1,
-        'deep_supervision': True,
+        'status': 'healthy',
+        'timestamp': datetime.now().isoformat(),
+        'version': '1.1.0',
+        'model_loaded': checkpoint_info.get('loaded', False),
+        'device': str(device) if device else 'unknown'
+    })
+
+@app.get("/api/version")
+async def get_version():
+    """Get API version and system info"""
+    return JSONResponse(content={
+        'version': '1.1.0',
+        'model': 'U-Net++',
+        'architecture': 'Nested U-Net with Deep Supervision',
+        'parameters': '9.0M',
         'device': str(device),
-        'loaded': checkpoint_info.get('loaded', False),
-        'checkpoint': checkpoint_info
+        'model_loaded': checkpoint_info.get('loaded', False),
+        'last_updated': datetime.now().isoformat()
     })
 
 @lru_cache(maxsize=1)

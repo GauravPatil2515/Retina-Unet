@@ -396,7 +396,7 @@ class ModalController {
         // Set metrics
         const statCoverage = document.getElementById('statCoverage');
         const statConfidence = document.getElementById('statConfidence');
-        const statSize = document.getElementById('statSize');
+        const statTime = document.getElementById('statTime');
         
         if (result.vessel_coverage && statCoverage) {
             statCoverage.textContent = `${result.vessel_coverage.toFixed(2)}%`;
@@ -404,8 +404,8 @@ class ModalController {
         if (result.mean_confidence && statConfidence) {
             statConfidence.textContent = `${(result.mean_confidence * 100).toFixed(2)}%`;
         }
-        if (result.image_size && statSize) {
-            statSize.textContent = result.image_size;
+        if (result.processing_time && statTime) {
+            statTime.textContent = `${result.processing_time}s`;
         }
 
         // Show modal
@@ -541,7 +541,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initializeSparklines();
     initializeProgressBars();
     
-    console.log('RetinaAI Platform initialized');
+    console.log('🎉 RetinaAI Platform v1.1.0 initialized successfully');
 });
 
 // Expose functions globally
