@@ -39,6 +39,7 @@ body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     overflow-x: hidden;
+    transition: background-color 0.3s ease;
 }
 
 /* Mobile Header (Hamburger Menu) */
@@ -486,7 +487,7 @@ body {
 .btn-primary:hover {
     background: var(--primary-hover);
     transform: translateY(-1px);
-    box-shadow: var(--shadow-md);
+    box-shadow: var(--shadow-md), 0 0 20px rgba(220, 20, 73, 0.3);
 }
 
 .btn-primary:active {
