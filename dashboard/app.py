@@ -1,35 +1,20 @@
 """
 FastAPI Dashboard for Retina Blood Vessel Segmentation
-Medical AI Dashboard with real-time inference - OPTIMIZED
+BACKWARD COMPATIBILITY WRAPPER - Imports from refactored main.py
 """
 
-from fastapi import FastAPI, File, UploadFile, Request
-from fastapi.responses import HTMLResponse, JSONResponse, Response
-from fastapi.staticfiles import StaticFiles
-from fastapi.templating import Jinja2Templates
-from fastapi.middleware.gzip import GZipMiddleware
-from fastapi.middleware.cors import CORSMiddleware
-from contextlib import asynccontextmanager
-import torch
-import numpy as np
-from PIL import Image
-import io
-import base64
-import sys
-import os
-import time
-from pathlib import Path
-import json
-from datetime import datetime
-import asyncio
-from functools import lru_cache
+# This file is kept for backward compatibility
+# All functionality has been moved to main.py with modular architecture
+# This simply re-exports the app from main.py
 
-# Add parent directory to path
-sys.path.append(str(Path(__file__).parent.parent))
+from main import app
 
-from models.unet_plus_plus import UNetPlusPlus
+# Re-export for any external imports
+__all__ = ['app']
 
-# Global variables
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app, host="0.0.0.0", port=8000)
 model = None
 device = None
 checkpoint_info = {}
