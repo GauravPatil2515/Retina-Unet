@@ -82,8 +82,8 @@ app.mount("/static", StaticFiles(directory=str(BASE_DIR / "static")), name="stat
 templates = Jinja2Templates(directory=str(BASE_DIR / "templates"))
 
 # Include routers
-app.include_router(segment.router)
-app.include_router(health.router)
+app.include_router(segment)
+app.include_router(health)
 
 
 @app.get("/", response_class=HTMLResponse)

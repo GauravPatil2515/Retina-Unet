@@ -162,10 +162,36 @@ class ImageUploader {
         this.uploadCard.style.display = 'none';
         this.loadingIndicator.style.display = 'block';
 
-        const formData = new FormData();
-        formData.append('file', file);
+        // Reset progress
+        this.resetLoadingSteps();
+        this.updateProgress(0);
 
         try {
+            // Step 1: Validating image
+            this.updateLoadingStep(1, 'active');
+            document.getElementById('loadingText').textContent = 'Validating image...';
+            await this.simulateProgress(25, 1000);
+
+            // Step 2: Preprocessing
+            this.updateLoadingStep(1, 'completed');
+            this.updateLoadingStep(2, 'active');
+            document.getElementById('loadingText').textContent = 'Preprocessing image...';
+            await this.simulateProgress(50, 1500);
+
+            // Step 3: AI Analysis
+            this.updateLoadingStep(2, 'completed');
+            this.updateLoadingStep(3, 'active');
+            document.getElementById('loadingText').textContent = 'AI Analysis in progress...';
+            await this.simulateProgress(75, 2000);
+
+            // Step 4: Generating results
+            this.updateLoadingStep(3, 'completed');
+            this.updateLoadingStep(4, 'active');
+            document.getElementById('loadingText').textContent = 'Generating results...';
+
+            const formData = new FormData();
+            formData.append('file', file);
+
             const response = await fetch('/api/segment', {
                 method: 'POST',
                 body: formData
@@ -177,19 +203,29 @@ class ImageUploader {
 
             const result = await response.json();
             
-            // Display results
-            this.displayResults(result, file);
+            // Complete progress
+            this.updateProgress(100);
+            this.updateLoadingStep(4, 'completed');
+            document.getElementById('loadingText').textContent = 'Complete!';
             
-            // Add to recent uploads
-            this.addToRecentUploads(result, file);
+            // Small delay to show completion
+            setTimeout(() => {
+                // Display results
+                this.displayResults(result, file);
+                
+                // Add to recent uploads
+                this.addToRecentUploads(result, file);
+            }, 500);
             
         } catch (error) {
             console.error('Error:', error);
-            alert('Failed to process image. Please try again.');
+            document.getElementById('loadingText').textContent = 'Error processing image. Please try again.';
             
-            // Reset UI
-            this.uploadCard.style.display = 'block';
-            this.loadingIndicator.style.display = 'none';
+            // Reset UI after error
+            setTimeout(() => {
+                this.uploadCard.style.display = 'block';
+                this.loadingIndicator.style.display = 'none';
+            }, 2000);
         }
     }
 
@@ -302,19 +338,46 @@ class ImageUploader {
         modalController.showResults(upload);
     }
 
+    resetLoadingSteps() {
+        for (let i = 1; i <= 4; i++) {
+            const step = document.getElementById(`step${i}`);
+            if (step) step.className = 'loading-step';
+        }
+    }
+
+    updateLoadingStep(stepNumber, status) {
+        const step = document.getElementById(`step${stepNumber}`);
+        if (step) step.className = `loading-step ${status}`;
+    }
+
+    updateProgress(percentage) {
+        const progressBar = document.getElementById('progressBar');
+        if (progressBar) progressBar.style.width = `${percentage}%`;
+    }
+
+    simulateProgress(targetPercentage, duration) {
+        return new Promise(resolve => {
+            const startPercentage = parseFloat(document.getElementById('progressBar').style.width) || 0;
+            const increment = (targetPercentage - startPercentage) / (duration / 50);
+            let currentPercentage = startPercentage;
+
+            const interval = setInterval(() => {
+                currentPercentage += increment;
+                if (currentPercentage >= targetPercentage) {
+                    currentPercentage = targetPercentage;
+                    clearInterval(interval);
+                    resolve();
+                }
+                this.updateProgress(currentPercentage);
+            }, 50);
+        });
+    }
+
     resetUpload() {
         this.uploadCard.style.display = 'block';
         this.loadingIndicator.style.display = 'none';
         this.resultsPreview.style.display = 'none';
         this.fileInput.value = '';
-    }
-
-    truncateName(name, maxLength) {
-        if (name.length <= maxLength) return name;
-        const ext = name.split('.').pop();
-        const nameWithoutExt = name.substring(0, name.lastIndexOf('.'));
-        const truncated = nameWithoutExt.substring(0, maxLength - ext.length - 4) + '...';
-        return truncated + '.' + ext;
     }
 
     formatDate(dateString) {

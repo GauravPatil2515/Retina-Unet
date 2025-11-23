@@ -174,11 +174,32 @@
                                 <span class="format-badge">JPEG</span>
                                 <span class="format-badge">TIFF</span>
                             </div>
-                            <input type="file" id="imageInput" accept="image/*" hidden>
                         </div>
+                        <input type="file" id="imageInput" accept="image/*" style="display: none;">
                         <div id="loadingIndicator" class="loading-indicator" style="display: none;">
                             <div class="spinner"></div>
-                            <p>Processing image...</p>
+                            <p id="loadingText">Processing image...</p>
+                            <div class="loading-steps">
+                                <div class="loading-step" id="step1">
+                                    <div class="loading-step-icon">1</div>
+                                    <span class="loading-step-text">Validating image</span>
+                                </div>
+                                <div class="loading-step" id="step2">
+                                    <div class="loading-step-icon">2</div>
+                                    <span class="loading-step-text">Preprocessing</span>
+                                </div>
+                                <div class="loading-step" id="step3">
+                                    <div class="loading-step-icon">3</div>
+                                    <span class="loading-step-text">AI Analysis</span>
+                                </div>
+                                <div class="loading-step" id="step4">
+                                    <div class="loading-step-icon">4</div>
+                                    <span class="loading-step-text">Generating results</span>
+                                </div>
+                            </div>
+                            <div class="progress-container">
+                                <div class="progress-bar-fill" id="progressBar"></div>
+                            </div>
                         </div>
                     </div>
 

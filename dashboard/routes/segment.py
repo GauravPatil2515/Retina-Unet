@@ -3,6 +3,7 @@
 from fastapi import APIRouter, File, UploadFile, status
 from fastapi.responses import JSONResponse
 import asyncio
+import numpy as np
 
 from services.model_service import model_service
 from services.image_service import image_service
@@ -119,19 +120,12 @@ async def segment_image(file: UploadFile = File(...)):
         heatmap = image_service.create_heatmap(pred_prob_original)
 
         # Convert to base64
-        original_b64 = image_service.image_to_base64(image_service.create_overlay(original_image, vessel_mask))
+        original_b64 = image_service.image_to_base64(np.array(original_image))
         mask_b64 = image_service.image_to_base64(
-            image_service.Image.fromarray(
-                image_service.np.stack([pred_binary_original]*3, axis=-1)
-            )
+            np.stack([pred_binary_original]*3, axis=-1)
         )
         overlay_b64 = image_service.image_to_base64(overlay)
         heatmap_b64 = image_service.image_to_base64(heatmap)
-
-        # Create proper overlay for original
-        import numpy as np
-        original_array = np.array(original_image)
-        original_b64 = image_service.image_to_base64(original_array)
 
         # Model metrics
         estimated_dice = 0.8367

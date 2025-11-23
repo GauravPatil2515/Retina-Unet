@@ -55,9 +55,11 @@ class ModelService:
         """Create model architecture"""
         print("Creating model architecture...")
         
-        with torch.device(self.device):
+        # Create model on CPU first to avoid CUDA memory issues during initialization
+        with torch.device('cpu'):
             model = UNetPlusPlus(in_channels=3, out_channels=1, deep_supervision=True)
         
+        # Move to target device
         model = model.to(self.device)
         model.eval()  # Set to eval mode immediately
         

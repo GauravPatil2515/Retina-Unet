@@ -1,20 +1,35 @@
 """
 FastAPI Dashboard for Retina Blood Vessel Segmentation
-BACKWARD COMPATIBILITY WRAPPER - Imports from refactored main.py
+Complete implementation with fallback for modular architecture
 """
 
-# This file is kept for backward compatibility
-# All functionality has been moved to main.py with modular architecture
-# This simply re-exports the app from main.py
+import asyncio
+import base64
+import io
+import json
+import time
+from contextlib import asynccontextmanager
+from datetime import datetime
+from functools import lru_cache
+from pathlib import Path
 
-from main import app
+import numpy as np
+import torch
+from fastapi import FastAPI, File, Request, UploadFile
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import HTMLResponse, JSONResponse
+from fastapi.staticfiles import StaticFiles
+from fastapi.templating import Jinja2Templates
+from PIL import Image
 
-# Re-export for any external imports
-__all__ = ['app']
+import sys
+import os
+# Add parent directory to path for imports
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-if __name__ == "__main__":
-    import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+from models.unet_plus_plus import UNetPlusPlus
+
+# Global variables
 model = None
 device = None
 checkpoint_info = {}
@@ -76,15 +91,9 @@ BASE_DIR = Path(__file__).parent
 
 # Mount static files with caching
 app.mount("/static", StaticFiles(directory=str(BASE_DIR / "static")), name="static")
+# Mount static files with caching
+app.mount("/static", StaticFiles(directory=str(BASE_DIR / "static")), name="static")
 templates = Jinja2Templates(directory=str(BASE_DIR / "templates"))
-
-# Global variables
-model = None
-device = None
-checkpoint_info = {}
-
-# Cache for matplotlib imports (expensive on first load)
-_matplotlib_imported = False
 
 def import_matplotlib():
     """Lazy import matplotlib only when needed"""
@@ -254,18 +263,14 @@ async def segment_image(file: UploadFile = File(...)):
             )
 
         # Check file size (max 10MB)
-        file_size = 0
-        content_chunks = []
-        async for chunk in file:
-            file_size += len(chunk)
-            content_chunks.append(chunk)
-            if file_size > 10 * 1024 * 1024:  # 10MB limit
-                return JSONResponse(
-                    content={'success': False, 'error': 'File too large. Maximum size is 10MB.'},
-                    status_code=413
-                )
-
-        contents = b''.join(content_chunks)
+        contents = await file.read()
+        file_size = len(contents)
+        
+        if file_size > 10 * 1024 * 1024:  # 10MB limit
+            return JSONResponse(
+                content={'success': False, 'error': 'File too large. Maximum size is 10MB.'},
+                status_code=413
+            )
 
         # Check if model is loaded
         if model is None:
@@ -366,7 +371,7 @@ async def segment_image(file: UploadFile = File(...)):
             buffer = io.BytesIO()
             img_pil.save(buffer, format='PNG', optimize=False, compress_level=1)  # Fast compression
             return f"data:image/png;base64,{base64.b64encode(buffer.getvalue()).decode()}"
-        
+
         # Calculate metrics based on model's expected performance (from training)
         # These are estimated based on the model's training dice score of 0.8367
         estimated_dice = 0.8367
