@@ -8,8 +8,8 @@ class NavigationController {
     }
 
     init() {
-        // Add click listeners to nav items
-        document.querySelectorAll('.nav-item').forEach(item => {
+        // Add click listeners to nav items (both sidebar and mobile bottom nav)
+        document.querySelectorAll('.nav-item, .mobile-nav-item').forEach(item => {
             item.addEventListener('click', (e) => {
                 e.preventDefault();
                 const targetPage = e.currentTarget.dataset.page;
@@ -23,9 +23,17 @@ class NavigationController {
 
     navigateTo(pageName) {
         if (this.currentPage === pageName) return;
-        
-        // Update active nav item
+
+        // Update active nav item in sidebar
         document.querySelectorAll('.nav-item').forEach(item => {
+            item.classList.remove('active');
+            if (item.dataset.page === pageName) {
+                item.classList.add('active');
+            }
+        });
+
+        // Update active nav item in mobile bottom nav
+        document.querySelectorAll('.mobile-nav-item').forEach(item => {
             item.classList.remove('active');
             if (item.dataset.page === pageName) {
                 item.classList.add('active');
@@ -158,50 +166,65 @@ class ImageUploader {
     }
 
     async uploadImage(file) {
-        // Show loading
+        // Show loading immediately
+        console.log('Starting upload process...');
         this.uploadCard.style.display = 'none';
+        this.resultsPreview.style.display = 'none';
         this.loadingIndicator.style.display = 'block';
-
+        
         // Reset progress
         this.resetLoadingSteps();
         this.updateProgress(0);
+        
+        // Add loading class to body for global loading state
+        document.body.classList.add('loading-active');
 
         try {
             // Step 1: Validating image
             this.updateLoadingStep(1, 'active');
             document.getElementById('loadingText').textContent = 'Validating image...';
+            console.log('Step 1: Validating image');
             await this.simulateProgress(25, 1000);
 
             // Step 2: Preprocessing
             this.updateLoadingStep(1, 'completed');
             this.updateLoadingStep(2, 'active');
             document.getElementById('loadingText').textContent = 'Preprocessing image...';
+            console.log('Step 2: Preprocessing');
             await this.simulateProgress(50, 1500);
 
             // Step 3: AI Analysis
             this.updateLoadingStep(2, 'completed');
             this.updateLoadingStep(3, 'active');
             document.getElementById('loadingText').textContent = 'AI Analysis in progress...';
+            console.log('Step 3: AI Analysis');
             await this.simulateProgress(75, 2000);
 
             // Step 4: Generating results
             this.updateLoadingStep(3, 'completed');
             this.updateLoadingStep(4, 'active');
             document.getElementById('loadingText').textContent = 'Generating results...';
+            console.log('Step 4: Generating results');
 
             const formData = new FormData();
             formData.append('file', file);
 
+            console.log('Sending request to /api/segment...');
             const response = await fetch('/api/segment', {
                 method: 'POST',
                 body: formData
             });
 
+            console.log('Response received:', response.status);
+            
             if (!response.ok) {
-                throw new Error('Upload failed');
+                const errorText = await response.text();
+                console.error('Server error:', response.status, errorText);
+                throw new Error(`Server error: ${response.status} - ${errorText}`);
             }
 
             const result = await response.json();
+            console.log('Result received:', result);
             
             // Complete progress
             this.updateProgress(100);
@@ -210,22 +233,27 @@ class ImageUploader {
             
             // Small delay to show completion
             setTimeout(() => {
+                console.log('Displaying results...');
                 // Display results
                 this.displayResults(result, file);
                 
                 // Add to recent uploads
                 this.addToRecentUploads(result, file);
+                
+                // Remove loading class
+                document.body.classList.remove('loading-active');
             }, 500);
             
         } catch (error) {
-            console.error('Error:', error);
-            document.getElementById('loadingText').textContent = 'Error processing image. Please try again.';
+            console.error('Upload error:', error);
+            document.getElementById('loadingText').textContent = `Error: ${error.message}. Please try again.`;
             
             // Reset UI after error
             setTimeout(() => {
                 this.uploadCard.style.display = 'block';
                 this.loadingIndicator.style.display = 'none';
-            }, 2000);
+                document.body.classList.remove('loading-active');
+            }, 3000);
         }
     }
 
@@ -591,6 +619,7 @@ let navigationController;
 let imageUploader;
 let modalController;
 let searchController;
+let onboardingController;
 
 // Initialize on DOM load
 document.addEventListener('DOMContentLoaded', () => {
@@ -599,6 +628,7 @@ document.addEventListener('DOMContentLoaded', () => {
     imageUploader = new ImageUploader();
     modalController = new ModalController();
     searchController = new SearchController();
+    onboardingController = new OnboardingController();
     
     // Initialize UI elements
     initializeSparklines();
@@ -632,7 +662,314 @@ function navigateTo(page) {
     }
 }
 
+// Premium Onboarding System
+class OnboardingController {
+    constructor() {
+        this.currentStep = 0;
+        this.isActive = false;
+        this.touchStartX = 0;
+        this.touchStartY = 0;
+        this.touchEndX = 0;
+        this.touchEndY = 0;
+        this.steps = [
+            {
+                target: '.upload-zone',
+                title: 'Upload Your Retina Images',
+                content: 'Drag and drop or click to upload retina images for AI-powered segmentation analysis.',
+                position: 'bottom',
+                icon: '📤'
+            },
+            {
+                target: '.metric-cards',
+                title: 'Real-time Performance Metrics',
+                content: 'Monitor your AI model\'s performance with live Dice coefficient, accuracy, and other key metrics.',
+                position: 'top',
+                icon: '📊'
+            },
+            {
+                target: '.recent-uploads',
+                title: 'Analysis History',
+                content: 'Quickly access your recent analyses and compare results across different images.',
+                position: 'left',
+                icon: '📚'
+            },
+            {
+                target: '.mobile-bottom-nav .mobile-nav-item[data-page="history"]',
+                title: 'Detailed History & Reports',
+                content: 'View comprehensive analysis history, download reports, and track your progress over time.',
+                position: 'top',
+                icon: '📋'
+            },
+            {
+                target: '.mobile-bottom-nav .mobile-nav-item[data-page="settings"]',
+                title: 'Customize Your Experience',
+                content: 'Adjust AI parameters, configure notifications, and personalize your dashboard settings.',
+                position: 'top',
+                icon: '⚙️'
+            }
+        ];
+        this.overlay = null;
+        this.tooltip = null;
+        this.init();
+    }
+
+    init() {
+        // Check if user has seen onboarding
+        const hasSeenOnboarding = localStorage.getItem('retinaAI_onboarding_completed');
+        
+        if (!hasSeenOnboarding) {
+            // Show onboarding after a short delay
+            setTimeout(() => {
+                this.start();
+            }, 1500);
+        }
+
+        // Add restart onboarding option (could be in settings)
+        this.addRestartOption();
+
+        // Add touch gesture support
+        this.addTouchGestures();
+    }
+
+    addTouchGestures() {
+        // Add touch event listeners for swipe gestures
+        document.addEventListener('touchstart', (e) => {
+            this.touchStartX = e.changedTouches[0].screenX;
+            this.touchStartY = e.changedTouches[0].screenY;
+        }, { passive: true });
+
+        document.addEventListener('touchend', (e) => {
+            this.touchEndX = e.changedTouches[0].screenX;
+            this.touchEndY = e.changedTouches[0].screenY;
+            this.handleSwipeGesture();
+        }, { passive: true });
+    }
+
+    handleSwipeGesture() {
+        if (!this.isActive) return;
+
+        const deltaX = this.touchEndX - this.touchStartX;
+        const deltaY = this.touchEndY - this.touchStartY;
+        const minSwipeDistance = 50;
+
+        // Check if it's a horizontal swipe (more horizontal than vertical)
+        if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > minSwipeDistance) {
+            if (deltaX > 0) {
+                // Swipe right - previous step
+                this.previous();
+            } else {
+                // Swipe left - next step
+                this.next();
+            }
+        }
+    }
+
+    start() {
+        this.isActive = true;
+        this.currentStep = 0;
+        this.createOverlay();
+        this.showStep(0);
+    }
+
+    createOverlay() {
+        // Create overlay
+        this.overlay = document.createElement('div');
+        this.overlay.className = 'onboarding-overlay';
+        this.overlay.innerHTML = `
+            <div class="onboarding-tooltip" id="onboardingTooltip">
+                <div class="tooltip-arrow" id="tooltipArrow"></div>
+                <div class="tooltip-content">
+                    <div class="tooltip-header">
+                        <span class="tooltip-icon" id="tooltipIcon"></span>
+                        <h4 id="tooltipTitle"></h4>
+                    </div>
+                    <div class="tooltip-body">
+                        <p id="tooltipContent"></p>
+                        <div class="tooltip-progress">
+                            <div class="progress-dots" id="progressDots"></div>
+                            <span class="progress-text" id="progressText"></span>
+                        </div>
+                    </div>
+                    <div class="tooltip-actions">
+                        <button class="btn-skip" id="skipOnboarding">Skip Tour</button>
+                        <div class="primary-actions">
+                            <button class="btn-prev" id="prevStep" style="display: none;">Previous</button>
+                            <button class="btn-next" id="nextStep">Next</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+
+        document.body.appendChild(this.overlay);
+        this.tooltip = document.getElementById('onboardingTooltip');
+        
+        // Add event listeners
+        document.getElementById('skipOnboarding').addEventListener('click', () => this.end());
+        document.getElementById('nextStep').addEventListener('click', () => this.next());
+        document.getElementById('prevStep').addEventListener('click', () => this.previous());
+        
+        // Prevent interaction with background
+        this.overlay.addEventListener('click', (e) => {
+            if (e.target === this.overlay) {
+                e.stopPropagation();
+            }
+        });
+    }
+
+    showStep(stepIndex) {
+        const step = this.steps[stepIndex];
+        if (!step) return;
+
+        // Update tooltip content
+        document.getElementById('tooltipIcon').textContent = step.icon;
+        document.getElementById('tooltipTitle').textContent = step.title;
+        document.getElementById('tooltipContent').textContent = step.content;
+        document.getElementById('progressText').textContent = `${stepIndex + 1} of ${this.steps.length}`;
+
+        // Update progress dots
+        this.updateProgressDots(stepIndex);
+
+        // Position tooltip
+        this.positionTooltip(step);
+
+        // Update button visibility
+        const prevBtn = document.getElementById('prevStep');
+        const nextBtn = document.getElementById('nextStep');
+        
+        prevBtn.style.display = stepIndex > 0 ? 'block' : 'none';
+        nextBtn.textContent = stepIndex === this.steps.length - 1 ? 'Get Started' : 'Next';
+
+        // Highlight target element
+        this.highlightTarget(step.target);
+    }
+
+    positionTooltip(step) {
+        const targetElement = document.querySelector(step.target);
+        if (!targetElement) return;
+
+        const rect = targetElement.getBoundingClientRect();
+        const tooltip = this.tooltip;
+        const arrow = document.getElementById('tooltipArrow');
+
+        // Reset tooltip position
+        tooltip.style.top = '';
+        tooltip.style.left = '';
+        tooltip.style.transform = '';
+
+        // Calculate position based on step.position
+        let top, left, arrowPosition;
+
+        switch (step.position) {
+            case 'top':
+                top = rect.top - 10;
+                left = rect.left + (rect.width / 2);
+                arrowPosition = 'bottom';
+                break;
+            case 'bottom':
+                top = rect.bottom + 10;
+                left = rect.left + (rect.width / 2);
+                arrowPosition = 'top';
+                break;
+            case 'left':
+                top = rect.top + (rect.height / 2);
+                left = rect.left - 10;
+                arrowPosition = 'right';
+                break;
+            case 'right':
+                top = rect.top + (rect.height / 2);
+                left = rect.right + 10;
+                arrowPosition = 'left';
+                break;
+            default:
+                top = rect.bottom + 10;
+                left = rect.left + (rect.width / 2);
+                arrowPosition = 'top';
+        }
+
+        // Position tooltip
+        tooltip.style.top = `${top}px`;
+        tooltip.style.left = `${left}px`;
+        tooltip.style.transform = 'translate(-50%, -100%)';
+
+        // Position arrow
+        arrow.className = `tooltip-arrow arrow-${arrowPosition}`;
+    }
+
+    updateProgressDots(activeIndex) {
+        const dotsContainer = document.getElementById('progressDots');
+        dotsContainer.innerHTML = '';
+
+        this.steps.forEach((_, index) => {
+            const dot = document.createElement('div');
+            dot.className = `dot ${index === activeIndex ? 'active' : ''}`;
+            dotsContainer.appendChild(dot);
+        });
+    }
+
+    highlightTarget(selector) {
+        // Remove previous highlights
+        document.querySelectorAll('.onboarding-highlight').forEach(el => {
+            el.classList.remove('onboarding-highlight');
+        });
+
+        // Add highlight to current target
+        const target = document.querySelector(selector);
+        if (target) {
+            target.classList.add('onboarding-highlight');
+        }
+    }
+
+    next() {
+        if (this.currentStep < this.steps.length - 1) {
+            this.currentStep++;
+            this.showStep(this.currentStep);
+        } else {
+            this.end();
+        }
+    }
+
+    previous() {
+        if (this.currentStep > 0) {
+            this.currentStep--;
+            this.showStep(this.currentStep);
+        }
+    }
+
+    end() {
+        this.isActive = false;
+        
+        // Remove overlay
+        if (this.overlay) {
+            this.overlay.remove();
+            this.overlay = null;
+        }
+
+        // Remove highlights
+        document.querySelectorAll('.onboarding-highlight').forEach(el => {
+            el.classList.remove('onboarding-highlight');
+        });
+
+        // Mark as completed
+        localStorage.setItem('retinaAI_onboarding_completed', 'true');
+    }
+
+    restart() {
+        this.end();
+        setTimeout(() => {
+            this.start();
+        }, 300);
+    }
+
+    addRestartOption() {
+        // Could add a restart button in settings or footer
+        // For now, add a global function for testing
+        window.restartOnboarding = () => this.restart();
+    }
+}
+
 // Expose these functions globally
 window.showFullResults = showFullResults;
 window.closeResults = closeResults;
 window.navigateTo = navigateTo;
+window.restartOnboarding = window.restartOnboarding || (() => {});
