@@ -1,0 +1,32 @@
+# ============================================================
+# requirements-train.txt
+# GPU Training Dependencies
+# Install with: pip install -r requirements-train.txt
+# ============================================================
+
+# Core deep learning (CUDA 11.8)
+--extra-index-url https://download.pytorch.org/whl/cu118
+torch==2.2.0+cu118
+torchvision==0.17.0+cu118
+
+# Data & numerics
+numpy>=1.23.0,<2.0.0
+pillow>=9.0.0
+pandas>=1.5.0
+scipy>=1.9.0
+
+# Computer vision
+opencv-python>=4.7.0
+
+# ML utilities
+scikit-learn>=1.2.0
+matplotlib>=3.5.0
+tqdm>=4.64.0
+
+# Foundation model fine-tuning (for E11/E12 RETFound experiments)
+peft>=0.9.0
+timm>=0.9.0
+transformers>=4.38.0
+
+# Experiment tracking (optional)
+# wandb>=0.16.0
